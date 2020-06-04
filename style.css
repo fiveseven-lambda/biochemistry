@@ -1,0 +1,11 @@
+h1{
+	font-family:sans-serif;
+}
+p.name{
+	font-family:sans-serif;
+	font-weight:bold;
+}
+p.desc{
+	font-family:sans-serif;
+	padding-bottom:15px;
+}

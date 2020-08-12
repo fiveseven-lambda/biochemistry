@@ -70,7 +70,9 @@
 			また，肝臓にはグルコース 6-リン酸を<a href="#glucose">グルコース</a>と無機リン酸P<sub>i</sub>に分解する
 			グルコース 6-ホスファターゼが存在するため，グリコーゲン分解や糖新生によって得られたグルコース 6-リン酸をグルコースに変換して血中に放出し，血糖値を上げることができる．<br>
 			ホスホヘキソースイソメラーゼによって <a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>に変換される<sub>(Mg<sup>2+</sup>依存，可逆)</sub>．<br>
-			ホスホグルコムターゼによって <a href="#glucose-1-phosphate">グルコース 1-リン酸</a>に変換される<sub>(可逆)</sub>．
+			ホスホグルコムターゼによって <a href="#glucose-1-phosphate">グルコース 1-リン酸</a>に変換される<sub>(可逆)</sub>．<br>
+			グルコース 6-リン酸デヒドロゲナーゼによって 6-ホスホグルコノ-δ-ラクトンへと酸化され<sub>(NADP<sup>+</sup>→NADPH+H<sup>+</sup>, Mg<sup>2+</sup>依存)</sub>，
+			その後ラクトナーゼによって加水分解されて<a href="#6-phosphogluconic-acid">6-ホスホグルコン酸</a>となる．
 		</p>
 		<p class="name" id="glucose-1-phosphate">グルコース 1-リン酸</p>
 		<p class="desc">
@@ -117,7 +119,7 @@
 		<p class="name" id="fructose-6-phosphate">フルクトース 6-リン酸</p>
 		<p class="desc">
 			<a href="#glucose-6-phosphate">グルコース 6-リン酸</a>からホスホヘキソースイソメラーゼ<sub>(Mg<sup>2+</sup>依存，可逆)</sub>によって，
-			あるいは<a href="#fructose">フルクトース</a>からヘキソキナーゼ<sub>(ATP→ADP，Mg<sup>2+</sup>依存)</sub>によって得られる．
+			あるいは<a href="#fructose">フルクトース</a>からヘキソキナーゼ<sub>(ATP→ADP，Mg<sup>2+</sup>依存)</sub>によって得られる．<br>
 			ホスホフルクトキナーゼ-1 によって<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>に変換される<sub>(ATP→ADP，Mg<sup>2+</sup>依存，不可逆)</sub>．
 			肝臓ではホスホフルクトキナーゼ-2 によって<a href="#fructose-2,6-bisphosphate">フルクトース 2,6-ビスリン酸</a>にも変換される<sub>(ATP→ADP)</sub>．
 		</p>
@@ -154,9 +156,11 @@
 		</p>
 		<p class="name" id="glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</p>
 		<p class="desc">
+			3 炭糖．<br>
 			アルドラーゼによる開裂を含む一連の反応によって，
 			1 分子の<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>，あるいは 1 分子の<a href="#fructose-1-bisphosphate">フルクトース 1-リン酸</a>から
 			2 分子のグリセルアルデヒド 3-リン酸が得られる．<br>
+			トランスケトラーゼによって，<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>が 2 炭素を失ってできる<sub>(TPP依存)</sub>．<br>
 			グリセルアルデヒド 3-リン酸デヒドロゲナーゼ<sub>(NAD<sup>+</sup>⇄NADH+H<sup>+</sup>, P<sub>i</sub>消費)</sub>，
 			ホスホグリセリン酸キナーゼ<sub>(ADP⇄ATP)</sub>，
 			ホスホグリセリン酸ムターゼ<sub>(Mg<sup>2+</sup>依存)</sub>，
@@ -184,12 +188,6 @@
 			アラニンアミノトランスフェラーゼによって，アラニンと α-ケトグルタル酸からピルビン酸とグルタミン酸が得られる．<br>
 			エタノール発酵を行う微生物では，ピルビン酸デカルボキシラーゼによって<a href="#acetaldehyde">アセトアルデヒド</a>と CO<sub>2</sub> に分解される<sub>(TPP依存，不可逆)</sub>．
 		</p>
-		<p class="name" id="oxaloacetic-acid">オキサロ酢酸</p>
-		<p class="desc">
-			リンゴ酸デヒドロゲナーゼによってリンゴ酸から得られる．<br>
-			不足したときは，ピルビン酸カルボキシラーゼによって<a href="#pyruvic-acid">ピルビン酸</a>から得られる．
-			このように，何かが不足したときにそれを補うように働く経路を，アナプレロティック経路という．
-		</p>
 		<p class="name" id="lactic-acid">乳酸</p>
 		<p class="desc">
 			乳酸デヒドロゲナーゼによって<a href="#pyruvic-acid">ピルビン酸</a>から得られる<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>．
@@ -200,7 +198,53 @@
 			 ピルビン酸デカルボキシラーゼによって<a href="#pyruvic-acid">ピルビン酸</a>から得られ，
 			 アルコールデヒドロゲナーゼによってエタノールへと還元され<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>，放出される．
 		</p>
-		<p class="name" id="acetyl-CoA">アセチルCoA</p>
+		<p class="name" id="6-phosphogluconic-acid">6-ホスホグルコン酸</p>
+		<p class="desc">
+			<a href="#glucose-6-phosphate">グルコース6-リン酸</a>から，グルコース 6-リン酸デヒドロゲナーゼによる酸化<sub>(NADP<sup>+</sup>→NADPH+H<sup>+</sup>，Mg<sup>2+</sup>依存)</sub>と
+			ラクトナーゼによる加水分解<sub>(Mg<sup>2+</sup>依存)</sub>によって得られる．
+			また 6-ホスホグルコン酸デヒドロゲナーゼによって<a href="#ribulose-5-phosphate">リブロース 5-リン酸</a>へと酸化される<sub>(NADP<sup>+</sup>→NADPH+H<sup>+</sup>，Mg<sup>2+</sup>依存，CO<sub>2</sub>放出)</sub>．
+			これらの反応は NADPH の産生に利用される．
+			グルコース 6-リン酸デヒドロゲナーゼは NADP<sup>+</sup> によって活性化される．
+		</p>
+		<p class="name" id="ribulose-5-phosphate">リブロース 5-リン酸</p>
+		<p class="desc">
+			5 炭糖．<br>
+			6-ホスホグルコン酸デヒドロゲナーゼによる<a href="#6-phosphogluconic-acid">6-ホスホグルコン酸</a>の酸化<sub>(NADP<sup>+</sup>→NADPH+H<sup>+</sup>，Mg<sup>2+</sup>依存，CO<sub>2</sub>放出)</sub>で得られる．<br>
+			ホスホペントースイソメラーゼによって<a href="#ribose-5-phosphate">リボース 5-リン酸</a>に変換される．<br>
+			リブロース 5-リン酸エピメラーゼによって<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>に変換される．
+		</p>
+		<p class="name" id="xylulose-5-phosphate">キシルロース 5-リン酸</p>
+		<p class="desc">
+			5 炭糖．<br>
+			リブロース 5-リン酸エピメラーゼによって<a href="#ribulose-5-phosphate">リブロース 5-リン酸</a>に変換される．<br>
+			トランスケトラーゼによって，
+			2 炭素を<a href="#ribose-5-phosphate">リボース 5-リン酸</a>に転移して<a href="#sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</a>を，
+			あるいは 2 炭素を<a href="#erythrose-4-phosphate">エリトロース 4-リン酸</a>に転移して<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>を生む<sub>(TPP依存)</sub>．
+			このとき 2 炭素を失ったキシルロース 5-リン酸は<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>となる．
+		</p>
+		<p class="name" id="sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</p>
+		<p class="desc">
+			7 炭糖．<br>
+			トランスケトラーゼによる，<a href="#ribose-5-phosphate">リボース 5-リン酸</a>への 2 炭素の転移で得られる<sub>(TPP依存)</sub>．<br>
+			トランスアルドラーゼによって，セドヘプツロース 7-リン酸の 3 炭素が<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>に転移され，
+			それぞれ<a href="#erythrose-4-phosphate">エリトロース 4-リン酸</a>と<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>になる．
+		</p>
+		<p class="name" id="erythrose-4-phosphate">エリトロース 4-リン酸</p>
+		<p class="desc">
+			4 炭糖．<br>
+			トランスアルドラーゼによって，<a href="#sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</a>が 3 炭素を失ってできる．<br>
+			トランスケトラーゼによって，<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>から 3 炭素を受け取って<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>になる<sub>(TPP依存)</sub>．
+		</p>
+		<p class="name" id="acetyl-CoA">アセチル CoA</p>
+		<p class="desc">
+		</p>
+		<p class="name" id="oxaloacetic-acid">オキサロ酢酸</p>
+		<p class="desc">
+			リンゴ酸デヒドロゲナーゼによってリンゴ酸から得られる．<br>
+			不足したときは，ピルビン酸カルボキシラーゼによって<a href="#pyruvic-acid">ピルビン酸</a>から得られる．
+			このように，何かが不足したときにそれを補うように働く経路を，アナプレロティック経路という．
+		</p>
+		<p class="name" id="ribose-5-phosphate">リボース 5-リン酸</p>
 		<p class="desc">
 		</p>
 	</body>

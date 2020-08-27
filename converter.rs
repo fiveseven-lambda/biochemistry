@@ -169,9 +169,9 @@ fn main() {
                                     write!(writer, "{}", g);
                                 }
                             }
-                            write!(writer, "</p>");
+                            write!(writer, "</p><div class=\"desc\">");
                             for d in desc {
-                                write!(writer, "<p class=\"desc\">");
+                                write!(writer, "<p>");
                                 enum State {
                                     Init,
                                     Escape,
@@ -230,6 +230,7 @@ fn main() {
                                 }
                                 write!(writer, "</p>");
                             }
+                            write!(writer, "</div>");
                         }
                         write!(writer, "</body>");
                     }

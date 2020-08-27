@@ -15,7 +15,7 @@ p.group{
 	text-align: right;
 	float: right;
 }
-p.desc{
+div.desc{
 	font-family:sans-serif;
 	clear: both;
 	padding-bottom:15px;

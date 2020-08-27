@@ -7,16 +7,19 @@ p{
 p.name{
 	font-family: sans-serif;
 	font-weight: bold;
+	font-size: medium;
 	float: left;
 }
 p.group{
 	font-family: sans-serif;
 	color: green;
 	text-align: right;
+	font-size: medium;
 	float: right;
 }
 div.desc{
 	font-family:sans-serif;
 	clear: both;
 	padding-bottom:15px;
+	font-size: medium;
 }

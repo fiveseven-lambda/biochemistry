@@ -1,4 +1,5 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
+use indexmap::set::IndexSet;
 use std::io::{Write, BufWriter};
 
 fn main() -> Result<(), std::io::Error> {
@@ -21,7 +22,7 @@ fn main() -> Result<(), std::io::Error> {
                 let mut line = 1;
                 let mut pos = 1;
                 let mut header = Vec::new();
-                let mut desc = Vec::<(String, String, HashSet<String>, Vec<String>)>::new();
+                let mut desc = Vec::<(String, String, IndexSet<String>, Vec<String>)>::new();
                 let mut identities = HashMap::<String, String>::new();
                 let mut indices = HashMap::<String, usize>::new();
                 let mut cur : Option<usize> = None;
@@ -108,7 +109,7 @@ fn main() -> Result<(), std::io::Error> {
                             if c.is_whitespace() {
                                 if let Some(cur_identity) = &cur_identity {
                                     if let Some(cur_name) = &cur_name {
-                                        desc.push((cur_identity.to_string(), cur_name.to_string(), HashSet::new(), Vec::new()));
+                                        desc.push((cur_identity.to_string(), cur_name.to_string(), IndexSet::new(), Vec::new()));
                                         identities.insert(cur_name.to_string(), cur_identity.to_string());
                                     }
                                 }

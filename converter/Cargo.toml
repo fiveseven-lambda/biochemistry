@@ -1,0 +1,8 @@
+[package]
+name = "converter"
+version = "0.1.0"
+authors = ["fiveseven-lambda <fiveseven.lambda@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+indexmap = "1.5.1"

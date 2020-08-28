@@ -213,7 +213,7 @@ fn main() -> Result<(), std::io::Error> {
                                                             write!(writer, "<a href=\"#{}\">{}</a>", identity, link)?;
                                                         }
                                                         None => {
-                                                            write!(writer, "{}", link)?;
+                                                            write!(writer, "<span class=\"no_link\">{}</span>", link)?;
                                                             println!("{}?", link);
                                                         }
                                                     }

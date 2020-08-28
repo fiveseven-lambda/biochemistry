@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::io::{Write, BufWriter};
 
-fn main() {
+fn main() -> Result<(), std::io::Error> {
     let mut args = std::env::args();
     args.next();
     if let Some(filename) = args.next() {
@@ -120,13 +120,20 @@ fn main() {
                             }
                         }
                         State::Group => {
-                            if c == '{' {
-                                if let Some(cur_group) = &cur_group {
-                                    if let Some(cur) = cur {
-                                        desc[cur].2.insert(cur_group.to_string());
+                            if c == '{' || c.is_whitespace() {
+                                if let Some(cur_group) = &mut cur_group {
+                                    if !cur_group.is_empty(){
+                                        if let Some(cur) = cur {
+                                            desc[cur].2.insert(cur_group.to_string());
+                                        }
+                                    }
+                                    if c != '{' {
+                                        cur_group.clear();
                                     }
                                 }
-                                state = State::Description;
+                                if c == '{' {
+                                    state = State::Description;
+                                }
                             } else {
                                 if let Some(cur_group) = &mut cur_group {
                                     cur_group.push(c);
@@ -155,23 +162,23 @@ fn main() {
                 match std::fs::File::create("index.html") {
                     Ok(out) => {
                         let mut writer = BufWriter::new(out);
-                        write!(writer, "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>化合物から見る代謝経路</title><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head><body>");
+                        write!(writer, "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>化合物から見る代謝経路</title><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head><body>")?;
                         for (tag, content) in header {
-                            write!(writer, "<{}>{}</{}>", tag, content, tag);
+                            write!(writer, "<{}>{}</{}>", tag, content, tag)?;
                         }
                         for (identity, name, group, desc) in desc {
-                            write!(writer, "<p class=\"name\" id=\"{}\">{}</p><p class=\"group\">", identity, name);
+                            write!(writer, "<p class=\"name\" id=\"{}\">{}</p><p class=\"group\">", identity, name)?;
                             for (i, g) in group.iter().enumerate() {
                                 if !g.is_empty() {
                                     if i != 0 {
-                                        write!(writer, "・");
+                                        write!(writer, "・")?;
                                     }
-                                    write!(writer, "{}", g);
+                                    write!(writer, "{}", g)?;
                                 }
                             }
-                            write!(writer, "</p><div class=\"desc\">");
+                            write!(writer, "</p><div class=\"desc\">")?;
                             for d in desc {
-                                write!(writer, "<p>");
+                                write!(writer, "<p>")?;
                                 enum State {
                                     Init,
                                     Escape,
@@ -185,8 +192,8 @@ fn main() {
                                         State::Init => {
                                             if c == '$' {
                                                 state = State::Escape;
-                                            } else {
-                                                write!(writer, "{}", c);
+                                            } else if !c.is_whitespace() {
+                                                write!(writer, "{}", c)?;
                                             }
                                         }
                                         State::Escape => {
@@ -195,7 +202,7 @@ fn main() {
                                                 state = State::Link;
                                             } else if c == '(' {
                                                 state = State::Sub;
-                                                write!(writer, "<sub>(");
+                                                write!(writer, "<sub>(")?;
                                             }
                                         }
                                         State::Link => {
@@ -203,10 +210,10 @@ fn main() {
                                                 if let Some(ref link) = link {
                                                     match identities.get(link) {
                                                         Some(identity) => {
-                                                            write!(writer, "<a href=\"#{}\">{}</a>", identity, link);
+                                                            write!(writer, "<a href=\"#{}\">{}</a>", identity, link)?;
                                                         }
                                                         None => {
-                                                            write!(writer, "{}", link);
+                                                            write!(writer, "{}", link)?;
                                                             println!("{}?", link);
                                                         }
                                                     }
@@ -220,24 +227,27 @@ fn main() {
                                         }
                                         State::Sub => {
                                             if c == ')' {
-                                                write!(writer, ")</sub>");
+                                                write!(writer, ")</sub>")?;
                                                 state = State::Init;
                                             } else {
-                                                write!(writer, "{}", c);
+                                                write!(writer, "{}", c)?;
                                             }
                                         }
                                     }
                                 }
-                                write!(writer, "</p>");
+                                write!(writer, "</p>")?;
                             }
-                            write!(writer, "</div>");
+                            write!(writer, "</div>")?;
                         }
-                        write!(writer, "</body>");
+                        write!(writer, "</body>")?;
+                        Ok(())
                     }
-                    Err(err) => println!("{}", err)
+                    Err(err) => Err(err)
                 }
             }
-            Err(err) => println!("{}", err)
+            Err(err) => Err(err)
         }
+    } else {
+        Ok(())
     }
 }

@@ -9,37 +9,61 @@ fn main() -> Result<(), Box<dyn Error>> {
     match Source::from(&source).parse() {
         Ok(result) => {
 
+            /*
             struct Item {
-                tag: String
+                identity: String,
             }
 
             impl Item {
-                fn from_tag(tag: String) -> Item {
-                    Item{ tag: tag }
+                fn from_identity(identity: String) -> Item {
+                    Item{ identity: identity }
                 }
             }
 
             let mut items = Vec::<Item>::new();
-            let mut indices = std::collections::HashMap::<&String, usize>::new();
+            let mut indices = std::collections::HashMap::<String, usize>::new();
+            let mut identities = std::collections::HashMap::<&Text, usize>::new();
+
+            let mut index = None;
 
             for expr in &result {
                 match expr {
                     Expr::Identity(identity) => {
                         let s = char_to_string(identity);
                         match indices.get(&s) {
-                            Some(_) => {
+                            Some(value) => {
+                                index = Some(*value);
                             }
                             None => {
                                 let len = items.len();
-                                items.push(Item::from_tag(s));
-                                let last = &items.last().unwrap().tag;
-                                indices.insert(last, len);
+                                items.push(Item::from_identity(s.to_owned()));
+                                indices.insert(s, len);
+                                index = Some(len);
+                            }
+                        }
+                    }
+                    Expr::Name(name) => {
+                        match identities.get(name) {
+                            Some(value) => {
+                                panic!("duplicate name");
+                            }
+                            None => {
+                                match index {
+                                    Some(index) => {
+                                        items[index].name = name;
+                                        identities.insert(name, index);
+                                    }
+                                    None => {
+                                        panic!("???");
+                                    }
+                                }
                             }
                         }
                     }
                     _ => {}
                 }
             }
+            */
 
         }
         Err(err) => println!("{}", err),

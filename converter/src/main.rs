@@ -8,18 +8,39 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     match Source::from(&source).parse() {
         Ok(result) => {
+
+            struct Item {
+                tag: String
+            }
+
+            impl Item {
+                fn from_tag(tag: String) -> Item {
+                    Item{ tag: tag }
+                }
+            }
+
+            let mut items = Vec::<Item>::new();
+            let mut indices = std::collections::HashMap::<&String, usize>::new();
+
             for expr in &result {
                 match expr {
-                    Expr::Tag(s) => {
-                        print!("Tag: ");
-                        for i in *s {
-                            print!("{}", i.value);
+                    Expr::Identity(identity) => {
+                        let s = char_to_string(identity);
+                        match indices.get(&s) {
+                            Some(_) => {
+                            }
+                            None => {
+                                let len = items.len();
+                                items.push(Item::from_tag(s));
+                                let last = &items.last().unwrap().tag;
+                                indices.insert(last, len);
+                            }
                         }
-                        println!("");
                     }
                     _ => {}
                 }
             }
+
         }
         Err(err) => println!("{}", err),
     }
@@ -57,7 +78,7 @@ fn search_dir(path: &str) -> Result<BTreeMap<usize, PathBuf>, Box<dyn Error>> {
     Ok(ret)
 }
 
-#[derive(Debug)]
+#[derive(Debug, Hash)]
 struct Char {
     value: char,
     file: usize,
@@ -74,6 +95,14 @@ impl Char {
             pos: self.pos,
         }
     }
+}
+
+fn char_to_string(s: &[Char]) -> String {
+    let mut ret = String::new();
+    for i in s {
+        ret.push(i.value);
+    }
+    ret
 }
 
 fn read(paths: &BTreeMap<usize, PathBuf>) -> Result<Vec<Char>, Box<dyn Error>> {
@@ -100,7 +129,7 @@ fn read(paths: &BTreeMap<usize, PathBuf>) -> Result<Vec<Char>, Box<dyn Error>> {
 
 #[derive(Debug)]
 enum Expr<'a> {
-    Tag(&'a [Char]),
+    Identity(&'a [Char]),
     Name(Text<'a>),
     Head(&'a [Char], Text<'a>),
     Desc(&'a [Char], Text<'a>),
@@ -111,6 +140,58 @@ enum Text<'a> {
     Str(&'a [Char]),
     Block(Vec<Text<'a>>),
     Link(Vec<Text<'a>>),
+}
+
+impl<'a> PartialEq for Text<'a> {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Text::Str(left), Text::Str(right)) => {
+                if left.len() == right.len() {
+                    for (l, r) in left.iter().zip(right.iter()) {
+                        if l.value != r.value {
+                            return false;
+                        }
+                    }
+                    true
+                } else {
+                    false
+                }
+            }
+            (Text::Block(left), Text::Block(right))
+                | (Text::Link(left), Text::Link(right))
+                => {
+                if left.len() == right.len() {
+                    for (l, r) in left.iter().zip(right.iter()) {
+                        if l != r {
+                            return false;
+                        }
+                    }
+                    true
+                } else {
+                    false
+                }
+            }
+            _ => false
+        }
+    }
+}
+impl<'a> Eq for Text<'a> {}
+
+impl<'a> std::hash::Hash for Text<'a> {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        match self {
+            Text::Str(chars) => {
+                for c in *chars {
+                    c.value.hash(state);
+                }
+            }
+            Text::Block(vec) | Text::Link(vec) => {
+                for text in vec {
+                    text.hash(state);
+                }
+            }
+        }
+    }
 }
 
 struct Source<'a> {
@@ -140,7 +221,7 @@ impl<'a> Source<'a> {
         let mut ret = Vec::new();
         enum State<'a> {
             Space,
-            Tag(usize),
+            Identity(usize),
             Desc(usize),
             Head(usize),
             Elem(Expr<'a>),
@@ -167,14 +248,14 @@ impl<'a> Source<'a> {
                     '\\' => State::Head(i),
                     '[' => State::Elem(Expr::Name(Text::Link(self.parse_block(']')?))),
                     c if c.is_whitespace() => State::Space,
-                    c if c.is_alphanumeric() => State::Tag(i),
+                    c if c.is_alphanumeric() => State::Identity(i),
                     _ => return Err(Box::new(ParseError::UnexpectedCharacter(c.clone()))),
                 },
             };
             match prev {
-                State::Tag(index) => match next {
-                    State::Tag(_) => continue,
-                    _ => ret.push(Expr::Tag(&self.source[index..i])),
+                State::Identity(index) => match next {
+                    State::Identity(_) => continue,
+                    _ => ret.push(Expr::Identity(&self.source[index..i])),
                 },
                 State::Elem(elem) => ret.push(elem),
                 _ => {}
@@ -183,7 +264,7 @@ impl<'a> Source<'a> {
         }
         match prev {
             State::Space => {}
-            State::Tag(index) => ret.push(Expr::Tag(&self.source[index..])),
+            State::Identity(index) => ret.push(Expr::Identity(&self.source[index..])),
             State::Desc(_) | State::Head(_) => {
                 return Err(Box::new(ParseError::UnexpectedEndOfFile))
             }

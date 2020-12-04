@@ -18,7 +18,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: CheckOut
       run: |
-        git pull origin release
+        git fetch origin release
+        git merge --allow-unrelated-histories origin/release
+        git fetch origin master
         git merge --allow-unrelated-histories origin/master
     - name: Build
       run: cargo build --release

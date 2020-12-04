@@ -67,6 +67,7 @@ impl<'a> Source<'a> {
                     '\\' => State::Head(i),
                     '[' => State::Elem(Expr::Name(self.parse_block(c, ']')?)),
                     c if c.is_whitespace() => State::Space,
+                    '-' | ',' => State::Identity(i),
                     c if c.is_alphanumeric() => State::Identity(i),
                     _ => return Err(Box::new(ParseError::UnexpectedCharacter(c.clone()))),
                 },

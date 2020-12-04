@@ -36,9 +36,21 @@ impl fmt::Binary for Char {
     }
 }
 
-pub fn print<Writer: std::io::Write>(s: &[Char], writer: &mut Writer) -> Result<(), Box<dyn std::error::Error>> {
-    for c in s {
-        write!(writer, "{}", c)?;
+pub struct Display<'a> {
+    text: &'a [Char]
+}
+
+impl<'a> Display<'a>{
+    pub fn from(text: &'a [Char]) -> Display<'a> {
+        Display{ text: text }
     }
-    Ok(())
+}
+
+impl<'a> std::fmt::Display for Display<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for c in self.text {
+            c.fmt(f)?;
+        }
+        Ok(())
+    }
 }

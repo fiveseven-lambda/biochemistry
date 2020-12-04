@@ -1,5 +1,5 @@
 use std::error::Error;
-use super::char::Char;
+use super::char::{Char, Display};
 use super::document::Document;
 
 pub struct Text<'a> {
@@ -46,8 +46,7 @@ impl<'a> Text<'a> {
                 Token::Link(text) => {
                     match document.names.get(&text) {
                         Some(&index) => {
-                            write!(writer, "<a href=\"#")?;
-                            super::char::print(document.items[index].identity, writer)?;
+                            write!(writer, "<a href=\"#{}>", Display::from(document.items[index].identity))?;
                             write!(writer, "\">")?;
                             text.print(writer, document)?;
                             write!(writer, "</a>")?;

@@ -1,4 +1,4 @@
-use super::char::Char;
+use super::char::{Char, Display};
 use super::source::Expr;
 use super::text::Text;
 use std::collections::{HashMap, HashSet};
@@ -70,9 +70,7 @@ impl<'a, 'b> Document<'a, 'b> {
                         match &ret.items[index].name {
                             Some(prev) => {
                                 if name != *prev {
-                                    eprint!("error: duplicate name for '");
-                                    super::char::print(ret.items[index].identity, &mut std::io::BufWriter::new(std::io::stderr()))?;
-                                    eprintln!("'");
+                                    eprint!("error: duplicate name for '{}'", Display::from(ret.items[index].identity));
                                     return Err(Box::new(CompileError::DuplicateName));
                                 }
                             }
@@ -118,26 +116,18 @@ impl<'a, 'b> Document<'a, 'b> {
     pub fn print<Writer: std::io::Write>(&self, mut writer: &mut Writer) -> Result<(), Box<dyn Error>> {
         write!(writer, "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>化合物から見る代謝経路</title><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head><body>")?;
         for (tag, text) in &self.headers {
-            write!(writer, "<")?;
-            super::char::print(tag, &mut writer)?;
-            write!(writer, ">")?;
+            write!(writer, "<{}>", Display::from(tag))?;
             text.print(&mut writer, &self)?;
-            write!(writer, "</")?;
-            super::char::print(tag, &mut writer)?;
-            write!(writer, ">")?;
+            write!(writer, "</{}>", Display::from(tag))?;
         }
         for item in &self.items {
-            write!(writer, "<p class=\"name\" id=\"")?;
-            super::char::print(item.identity, &mut writer)?;
-            write!(writer, "\">")?;
+            write!(writer, "<div class=\"item\"><div class=\"head\"><p class=\"name\" id=\"{}\">", Display::from(item.identity))?;
             match item.name {
                 Some(name) => {
                     name.print(&mut writer, &self)?;
                 }
                 None => {
-                    eprint!("error: name of \"");
-                    super::char::print(item.identity, &mut std::io::BufWriter::new(std::io::stderr()))?;
-                    eprintln!("\" not provided");
+                    eprintln!("error: name of \"{}\" not provided", Display::from(item.identity));
                     return Err(Box::new(DocumentPrintError::NoName));
                 }
             }
@@ -146,14 +136,15 @@ impl<'a, 'b> Document<'a, 'b> {
                 if i != 0 {
                     write!(writer, "・")?;
                 }
-                super::char::print(self.groups[group], writer)?;
+                write!(writer, "{}", Display::from(self.groups[group]))?;
             }
-            write!(writer, "</p>")?;
+            write!(writer, "</p></div><div class=\"descs\">")?;
             for desc in &item.descs {
                 write!(writer, "<p class=\"desc\">")?;
                 desc.print(&mut writer, &self)?;
                 write!(writer, "</p>")?;
             }
+            write!(writer, "</div></div>")?;
         }
         write!(writer, "</body>")?;
         Ok(())

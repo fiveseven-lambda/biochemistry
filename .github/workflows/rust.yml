@@ -16,12 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: CheckOut
       run: |
         git config user.name fiveseven-lambda
         git config user.email fiveseven.lambda@gmail.com
-        git checkout release
-        git pull master
+        git merge release
     - name: Build
       run: cargo build --release
       working-directory: converter

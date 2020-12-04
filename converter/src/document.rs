@@ -1,14 +1,14 @@
 use super::char::{Char, Display};
 use super::source::Expr;
 use super::text::Text;
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap, BTreeSet};
 use std::error::Error;
 
 pub struct Item<'a, 'b> {
     pub identity: &'a [Char],
     pub name: Option<&'b Text<'a>>,
     pub descs: Vec<&'b Text<'a>>,
-    pub groups: HashSet<usize>,
+    pub groups: BTreeSet<usize>,
 }
 
 impl<'a, 'b> Item<'a, 'b> {
@@ -17,7 +17,7 @@ impl<'a, 'b> Item<'a, 'b> {
             identity: s,
             name: None,
             descs: Vec::new(),
-            groups: HashSet::new(),
+            groups: BTreeSet::new(),
         }
     }
 }

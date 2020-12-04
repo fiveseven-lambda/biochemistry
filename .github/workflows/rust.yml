@@ -23,6 +23,7 @@ jobs:
         git config user.name fiveseven-lambda
         git config user.email fiveseven.lambda@gmail.com
         git checkout release
+        git merge master
     - name: Build
       run: cargo build --release
       working-directory: converter

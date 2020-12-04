@@ -10,6 +10,7 @@ pub enum Token<'a> {
     Char(&'a Char),
     Block(Text<'a>),
     Link(Text<'a>),
+    Paren(Text<'a>),
 }
 
 #[derive(thiserror::Error, Debug)]
@@ -42,6 +43,11 @@ impl<'a> Text<'a> {
                 }
                 Token::Block(text) => {
                     text.print(writer, document)?;
+                }
+                Token::Paren(text) => {
+                    write!(writer, "(")?;
+                    text.print(writer, document)?;
+                    write!(writer, ")")?;
                 }
                 Token::Link(text) => {
                     match document.names.get(&text) {
@@ -97,7 +103,7 @@ impl<'a> PartialEq for Token<'a> {
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {
             (Token::Char(left), Token::Char(right)) => left == right,
-            (Token::Block(left), Token::Block(right)) | (Token::Link(left), Token::Link(right)) => {
+            (Token::Block(left), Token::Block(right)) | (Token::Link(left), Token::Link(right)) | (Token::Paren(left), Token::Paren(right)) => {
                 left == right
             }
             _ => false,
@@ -122,7 +128,7 @@ impl<'a> hash::Hash for Token<'a> {
             Token::Char(c) => {
                 c.hash(state);
             }
-            Token::Block(text) | Token::Link(text) => {
+            Token::Block(text) | Token::Link(text) | Token::Paren(text) => {
                 text.hash(state);
             }
         }

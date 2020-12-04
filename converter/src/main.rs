@@ -27,6 +27,7 @@ fn main() {
                                         let mut buf = std::io::BufWriter::new(out);
                                         match document.print(&mut buf) {
                                             Ok(()) => {
+                                                println!("output written to index.html");
                                             }
                                             Err(err) => {
                                                 eprintln!("print error: {}", err);

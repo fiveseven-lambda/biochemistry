@@ -99,8 +99,9 @@ impl<'a> Source<'a> {
             match c.value {
                 '{' => ret.text.push(Token::Block(self.parse_block(c, '}')?)),
                 '[' => ret.text.push(Token::Link(self.parse_block(c, ']')?)),
+                '(' => ret.text.push(Token::Paren(self.parse_block(c, ')')?)),
                 c if c == delim => return Ok(ret),
-                '}' | ']' => return Err(Box::new(ParseError::NoOpeningBracket(c.clone()))),
+                '}' | ']' | ')' => return Err(Box::new(ParseError::NoOpeningBracket(c.clone()))),
                 _ => ret.text.push(Token::Char(c)),
             }
         }

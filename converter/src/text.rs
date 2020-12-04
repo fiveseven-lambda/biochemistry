@@ -14,7 +14,7 @@ pub enum Token<'a> {
 
 #[derive(thiserror::Error, Debug)]
 enum TextPrintError{
-    #[error("at {0:b}")]
+    #[error("no text after `{0}` at {0:b}")]
     NoDecorationTarget(Char),
 }
 
@@ -69,9 +69,6 @@ impl<'a> Text<'a> {
                 }
             }
             decorations.clear();
-        }
-        for i in &decorations {
-            println!("{}", i.value);
         }
         match decorations.first() {
             Some(&c) => Err(Box::new(TextPrintError::NoDecorationTarget(c.clone()))),

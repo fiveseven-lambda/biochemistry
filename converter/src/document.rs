@@ -70,7 +70,7 @@ impl<'a, 'b> Document<'a, 'b> {
                         match &ret.items[index].name {
                             Some(prev) => {
                                 if name != *prev {
-                                    eprint!("error: duplicate name for '{}'", Display::from(ret.items[index].identity));
+                                    eprint!("error: duplicate name for `{}`", Display::from(ret.items[index].identity));
                                     return Err(Box::new(CompileError::DuplicateName));
                                 }
                             }
@@ -127,7 +127,7 @@ impl<'a, 'b> Document<'a, 'b> {
                     name.print(&mut writer, &self)?;
                 }
                 None => {
-                    eprintln!("error: name of \"{}\" not provided", Display::from(item.identity));
+                    eprintln!("error: name of `{}` not provided", Display::from(item.identity));
                     return Err(Box::new(DocumentPrintError::NoName));
                 }
             }

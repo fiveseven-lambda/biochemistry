@@ -32,5 +32,5 @@ jobs:
     - name: Commit
       run: |
         git add index.html
-        git commit -m "action $(date)"
+        git commit -m "compiled source -> index.html, $(date)"
         git push origin release

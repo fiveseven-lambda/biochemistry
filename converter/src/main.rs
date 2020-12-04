@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::error::Error;
 use std::path::PathBuf;
 
@@ -8,63 +8,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     match Source::from(&source).parse() {
         Ok(result) => {
-
-            /*
-            struct Item {
-                identity: String,
-            }
-
-            impl Item {
-                fn from_identity(identity: String) -> Item {
-                    Item{ identity: identity }
-                }
-            }
-
-            let mut items = Vec::<Item>::new();
-            let mut indices = std::collections::HashMap::<String, usize>::new();
-            let mut identities = std::collections::HashMap::<&Text, usize>::new();
-
-            let mut index = None;
-
-            for expr in &result {
-                match expr {
-                    Expr::Identity(identity) => {
-                        let s = char_to_string(identity);
-                        match indices.get(&s) {
-                            Some(value) => {
-                                index = Some(*value);
-                            }
-                            None => {
-                                let len = items.len();
-                                items.push(Item::from_identity(s.to_owned()));
-                                indices.insert(s, len);
-                                index = Some(len);
-                            }
-                        }
-                    }
-                    Expr::Name(name) => {
-                        match identities.get(name) {
-                            Some(value) => {
-                                panic!("duplicate name");
-                            }
-                            None => {
-                                match index {
-                                    Some(index) => {
-                                        items[index].name = name;
-                                        identities.insert(name, index);
-                                    }
-                                    None => {
-                                        panic!("???");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    _ => {}
-                }
-            }
-            */
-
+            let document = Document::from_source(&result)?;
+            let mut writer = std::io::BufWriter::new(std::io::stdout());
         }
         Err(err) => println!("{}", err),
     }
@@ -102,7 +47,7 @@ fn search_dir(path: &str) -> Result<BTreeMap<usize, PathBuf>, Box<dyn Error>> {
     Ok(ret)
 }
 
-#[derive(Debug, Hash)]
+#[derive(Debug)]
 struct Char {
     value: char,
     file: usize,
@@ -118,6 +63,18 @@ impl Char {
             line: self.line,
             pos: self.pos,
         }
+    }
+}
+
+impl PartialEq for Char {
+    fn eq(&self, other: &Self) -> bool {
+        self.value == other.value
+    }
+}
+impl Eq for Char {}
+impl std::hash::Hash for Char {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.value.hash(state);
     }
 }
 
@@ -165,6 +122,20 @@ enum Text<'a> {
     Block(Vec<Text<'a>>),
     Link(Vec<Text<'a>>),
 }
+
+/* これさ
+ * struct Text {
+ *     text: Vec<Token>,
+ * }
+ *
+ * enum Token {
+ *     Str(&[Char]),
+ *     Block(Text),
+ *     Link(Text),
+ * }
+ *
+ * の方が良かった……
+ */
 
 impl<'a> PartialEq for Text<'a> {
     fn eq(&self, other: &Self) -> bool {
@@ -216,6 +187,42 @@ impl<'a> std::hash::Hash for Text<'a> {
             }
         }
     }
+}
+
+fn print_text<Writer: std::io::Write>(text: &Vec<Text>, writer: &mut Writer, document: &Document) -> Result<(), Box<dyn Error>> {
+    let mut sub = false;
+    let mut sup = false;
+    for t in text {
+        match t {
+            Text::Str(s) => {
+                for c in *s {
+                    match c.value {
+                        '^' => {
+                            sup = true;
+                        }
+                        '_' => {
+                            sub = true;
+                        }
+                        _ => {
+                            writer.write(c.value.to_string().as_bytes());
+                            if sup {
+                                sup = false;
+                            }
+                            if sub {
+                                sub = false;
+                            }
+                        }
+                    }
+                }
+            }
+            Text::Block(text) => {
+                print_text(text, writer, document);
+            }
+            Text::Link(text) => {
+            }
+        }
+    }
+    Ok(())
 }
 
 struct Source<'a> {
@@ -331,5 +338,96 @@ impl<'a> Source<'a> {
             prev = next;
         }
         Err(Box::new(ParseError::UnexpectedEndOfFile))
+    }
+}
+
+struct Item<'a, 'b> {
+    identity: &'a [Char],
+    name: Option<&'b Text<'a>>,
+    descs: Vec<&'b Text<'a>>,
+    groups: HashSet<usize>
+}
+
+impl<'a, 'b> Item<'a, 'b> {
+    fn from_identity(s: &'a [Char]) -> Item<'a, 'b> {
+        Item{
+            identity: s,
+            name: None,
+            descs: Vec::new(),
+            groups: HashSet::new()
+        }
+    }
+}
+
+#[derive(Default)]
+struct Document<'a, 'b> {
+    heads: Vec<(&'a [Char], &'b Text<'a>)>,
+    items: Vec<Item<'a, 'b>>,
+    groups: Vec<&'a [Char]>,
+    names: HashMap<&'b Text<'a>, usize>
+}
+
+impl<'a, 'b> Document<'a, 'b> {
+    fn from_source(source: &'b Vec<Expr<'a>>) -> Result<Document<'a, 'b>, Box<dyn Error>> {
+        let mut ret : Document = Default::default();
+        let mut groups = HashMap::<&[Char], usize>::new();
+        let mut identities = HashMap::<&[Char], usize>::new();
+        let mut index = None;
+        for expr in source {
+            match expr {
+                Expr::Identity(identity) => {
+                    match identities.get(identity) {
+                        Some(value) => {
+                            index = Some(*value);
+                        }
+                        None => {
+                            let len = identities.len();
+                            identities.insert(identity, len);
+                            ret.items.push(Item::from_identity(identity));
+                            index = Some(len);
+                        }
+                    }
+                }
+                Expr::Name(name) => {
+                    match index {
+                        Some(index) => {
+                            let target = &mut ret.items[index].name;
+                            match target {
+                                Some(_) => {
+                                }
+                                None => {
+                                    *target = Some(name);
+                                    ret.names.insert(name, index);
+                                }
+                            }
+                        }
+                        None => {}
+                    }
+                }
+                Expr::Head(tag, text) => {
+                    ret.heads.push((tag, text));
+                }
+                Expr::Desc(group, text) => {
+                    match index {
+                        Some(index) => {
+                            ret.items[index].descs.push(text);
+                            match groups.get(group) {
+                                Some(value) => {
+                                    ret.items[index].groups.insert(*value);
+                                }
+                                None => {
+                                    let len = groups.len();
+                                    groups.insert(group, len);
+                                    ret.groups.push(group);
+                                    ret.items[index].groups.insert(len);
+                                }
+                            }
+                        }
+                        None => {}
+                    }
+                }
+            }
+        }
+        Ok(ret)
     }
 }

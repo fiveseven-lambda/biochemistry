@@ -26,5 +26,5 @@ jobs:
         git config user.name fiveseven-lambda
         git config user.email fiveseven.lambda@gmail.com
         git add index.html
-        git commit -m action $(date)
+        git commit -m "action $(date)"
         push

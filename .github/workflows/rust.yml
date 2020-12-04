@@ -19,7 +19,7 @@ jobs:
     - name: CheckOut
       run: |
         git checkout -b release
-        git merge master
+        git pull
     - name: Build
       run: cargo build --release
       working-directory: converter

@@ -46,8 +46,7 @@ impl<'a> Text<'a> {
                 Token::Link(text) => {
                     match document.names.get(&text) {
                         Some(&index) => {
-                            write!(writer, "<a href=\"#{}>", Display::from(document.items[index].identity))?;
-                            write!(writer, "\">")?;
+                            write!(writer, "<a href=\"#{}\">", Display::from(document.items[index].identity))?;
                             text.print(writer, document)?;
                             write!(writer, "</a>")?;
                         }

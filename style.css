@@ -2,6 +2,16 @@ h1{
 }
 p{
 }
+div.item{
+	padding: 10px;
+	margin: 20px;
+}
+div.head{
+	display: flex;
+	justify-content: space-between;
+}
+div.descs{
+}
 p.name{
 	font-weight: bold;
 }
@@ -9,7 +19,7 @@ p.group{
 	color: green;
 	text-align: right;
 }
-div.desc{
+p.desc{
 }
 span.no_link{
 	color: red;

@@ -22,7 +22,7 @@ jobs:
       run: |
         git config user.name fiveseven-lambda
         git config user.email fiveseven.lambda@gmail.com
-        git merge release
+        git merge origin/release
     - name: Build
       run: cargo build --release
       working-directory: converter

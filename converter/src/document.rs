@@ -31,6 +31,16 @@ pub struct Document<'a, 'b> {
 }
 
 #[derive(thiserror::Error, Debug)]
+enum CompileError {
+    #[error("identity expected before name")]
+    NoIdentityBeforeName,
+    #[error("identity expected before description")]
+    NoIdentityBeforeDesc,
+    #[error("duplicate name")]
+    DuplicateName
+}
+
+#[derive(thiserror::Error, Debug)]
 enum DocumentPrintError {
     #[error("no name")]
     NoName
@@ -57,16 +67,24 @@ impl<'a, 'b> Document<'a, 'b> {
                 },
                 Expr::Name(name) => match index {
                     Some(index) => {
-                        let target = &mut ret.items[index].name;
-                        match target {
-                            Some(_) => {}
+                        match &ret.items[index].name {
+                            Some(prev) => {
+                                if name != *prev {
+                                    eprint!("error: duplicate name for '");
+                                    super::char::print(ret.items[index].identity, &mut std::io::BufWriter::new(std::io::stderr()))?;
+                                    eprintln!("'");
+                                    return Err(Box::new(CompileError::DuplicateName));
+                                }
+                            }
                             None => {
-                                *target = Some(name);
+                                ret.items[index].name = Some(name);
                                 ret.names.insert(name, index);
                             }
                         }
                     }
-                    None => {}
+                    None => {
+                        return Err(Box::new(CompileError::NoIdentityBeforeName));
+                    }
                 },
                 Expr::Head(tag, text) => {
                     ret.headers.push((tag, text));
@@ -88,7 +106,9 @@ impl<'a, 'b> Document<'a, 'b> {
                             }
                         }
                     }
-                    None => {}
+                    None => {
+                        return Err(Box::new(CompileError::NoIdentityBeforeDesc));
+                    }
                 },
             }
         }

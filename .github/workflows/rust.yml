@@ -18,8 +18,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: CheckOut
       run: |
-        git checkout -b release
         git pull origin master
+        git pull origin release
     - name: Build
       run: cargo build --release
       working-directory: converter

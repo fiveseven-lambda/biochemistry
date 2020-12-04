@@ -20,10 +20,8 @@ jobs:
       run: |
         git config user.name fiveseven-lambda
         git config user.email fiveseven.lambda@gmail.com
-        git fetch origin release
-        git merge --allow-unrelated-histories origin/release
-        git fetch origin master
-        git merge --allow-unrelated-histories origin/master
+        git checkout release
+        git pull master
     - name: Build
       run: cargo build --release
       working-directory: converter

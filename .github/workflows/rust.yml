@@ -16,10 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Checkout
-      run: |
-        git checkout action
-        git merge master
     - name: Build
       run: cargo build --release
       working-directory: converter
@@ -31,4 +27,5 @@ jobs:
         git config user.email fiveseven.lambda@gmail.com
         git add index.html
         git commit -m "action $(date)"
-        git push origin action
+        git checkout -b release
+        git push origin release

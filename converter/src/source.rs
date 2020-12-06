@@ -20,8 +20,8 @@ enum ParseError {
     UnexpectedCharacter(Char),
     #[error("no closing bracket to match `{0}` at {0:b}")]
     NoClosingBracket(Char),
-    #[error("no opening bracket to match `{0}` at {0:b}")]
-    NoOpeningBracket(Char),
+    #[error("brackets `{0}` at {0:b} and `{1}` at {1:b} does not match")]
+    BracketsDoesNotMatch(Char, Char),
     #[error("unexpected end of file")]
     UnexpectedEndOfFile,
 }
@@ -101,7 +101,7 @@ impl<'a> Source<'a> {
                 '[' => ret.text.push(Token::Link(self.parse_block(c, ']')?)),
                 '(' => ret.text.push(Token::Paren(self.parse_block(c, ')')?)),
                 c if c == delim => return Ok(ret),
-                '}' | ']' | ')' => return Err(Box::new(ParseError::NoOpeningBracket(c.clone()))),
+                '}' | ']' | ')' => return Err(Box::new(ParseError::BracketsDoesNotMatch(start.clone(), c.clone()))),
                 _ => ret.text.push(Token::Char(c)),
             }
         }

@@ -95,14 +95,21 @@ impl<'a> Source<'a> {
 
     fn parse_block(&mut self, start: &Char, delim: char) -> Result<Text<'a>, Box<dyn Error>> {
         let mut ret = Text { text: Vec::new() };
+        let mut escaped = false;
         while let Some((_, c)) = self.iter.next() {
-            match c.value {
-                '{' => ret.text.push(Token::Block(self.parse_block(c, '}')?)),
-                '[' => ret.text.push(Token::Link(self.parse_block(c, ']')?)),
-                '(' => ret.text.push(Token::Paren(self.parse_block(c, ')')?)),
-                c if c == delim => return Ok(ret),
-                '}' | ']' | ')' => return Err(Box::new(ParseError::BracketsDoesNotMatch(start.clone(), c.clone()))),
-                _ => ret.text.push(Token::Char(c)),
+            if escaped {
+                ret.text.push(Token::EscapedChar(c));
+                escaped = false;
+            } else {
+                match c.value {
+                    '\\' => escaped = true,
+                    '{' => ret.text.push(Token::Block(self.parse_block(c, '}')?)),
+                    '[' => ret.text.push(Token::Link(self.parse_block(c, ']')?)),
+                    '(' => ret.text.push(Token::Paren(self.parse_block(c, ')')?)),
+                    c if c == delim => return Ok(ret),
+                    '}' | ']' | ')' => return Err(Box::new(ParseError::BracketsDoesNotMatch(start.clone(), c.clone()))),
+                    _ => ret.text.push(Token::Char(c)),
+                }
             }
         }
         return Err(Box::new(ParseError::NoClosingBracket(start.clone())));

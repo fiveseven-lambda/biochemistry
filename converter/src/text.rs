@@ -8,6 +8,7 @@ pub struct Text<'a> {
 
 pub enum Token<'a> {
     Char(&'a Char),
+    EscapedChar(&'a Char),
     Block(Text<'a>),
     Link(Text<'a>),
     Paren(Text<'a>),
@@ -40,6 +41,9 @@ impl<'a> Text<'a> {
                             write!(writer, "{}", c)?;
                         }
                     }
+                }
+                Token::EscapedChar(c) => {
+                    write!(writer, "{}", c)?;
                 }
                 Token::Block(text) => {
                     text.print(writer, document)?;
@@ -102,7 +106,7 @@ impl<'a> Eq for Text<'a> {}
 impl<'a> PartialEq for Token<'a> {
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {
-            (Token::Char(left), Token::Char(right)) => left == right,
+            (Token::Char(left), Token::Char(right)) | (Token::EscapedChar(left), Token::EscapedChar(right)) => left == right,
             (Token::Block(left), Token::Block(right)) | (Token::Link(left), Token::Link(right)) | (Token::Paren(left), Token::Paren(right)) => {
                 left == right
             }
@@ -125,7 +129,7 @@ impl<'a> hash::Hash for Text<'a> {
 impl<'a> hash::Hash for Token<'a> {
     fn hash<H: hash::Hasher>(&self, state: &mut H) {
         match self {
-            Token::Char(c) => {
+            Token::Char(c) | Token::EscapedChar(c) => {
                 c.hash(state);
             }
             Token::Block(text) | Token::Link(text) | Token::Paren(text) => {

@@ -2,6 +2,11 @@ h1{
 }
 p{
 }
+header{
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+}
 div.item{
 	padding: 10px;
 	margin: 20px;

@@ -1,6 +1,6 @@
-use std::error::Error;
 use super::char::{Char, Display};
 use super::document::Document;
+use std::error::Error;
 
 // { } で囲まれた部分が Text となる．
 // "\p{ }" のようなヘッダー部分と
@@ -12,11 +12,11 @@ pub struct Text<'a> {
 }
 
 pub enum Token<'a> {
-    Char(&'a Char), // 普通の文字
+    Char(&'a Char),        // 普通の文字
     EscapedChar(&'a Char), // バックスラッシュでエスケープされた文字
-    Block(Text<'a>), // 波括弧 { } で囲まれた部分．波括弧自体は出力されない
-    Link(Text<'a>), // 角括弧 [ ] で囲まれた部分．ハイパーリンクになる
-    Paren(Text<'a>), // 丸括弧 ( ) で囲まれた部分．丸括弧も含めて出力される
+    Block(Text<'a>),       // 波括弧 { } で囲まれた部分．波括弧自体は出力されない
+    Link(Text<'a>),        // 角括弧 [ ] で囲まれた部分．ハイパーリンクになる
+    Paren(Text<'a>),       // 丸括弧 ( ) で囲まれた部分．丸括弧も含めて出力される
 }
 
 // ^ （上付き）と _ （下付き）は，
@@ -24,12 +24,12 @@ pub enum Token<'a> {
 // たとえば ^{〜} と書くとブロック全体が上付きになる．
 
 #[derive(thiserror::Error, Debug)]
-enum TextPrintError{
+enum TextPrintError {
     #[error("no text after `{0}` at {0:b}")]
     NoDecorationTarget(Char), // ^ や _ の直後に何も無い場合
 }
 
-enum Decoration<'a>{
+enum Decoration<'a> {
     Sup(&'a Char),
     Sub(&'a Char),
 }
@@ -37,27 +37,29 @@ enum Decoration<'a>{
 impl<'a> Text<'a> {
     // Text を index.html に出力するときに使う．
     // [ ] をリンクにするために，引数で受け取った Document を参照する．
-    pub fn print<Writer: std::io::Write>(&self, writer: &mut Writer, document: &Document) -> Result<(), Box<dyn Error>> {
+    pub fn print<Writer: std::io::Write>(
+        &self,
+        writer: &mut Writer,
+        document: &Document,
+    ) -> Result<(), Box<dyn Error>> {
         let mut decorations = Vec::new();
         for token in &self.text {
             match token {
-                Token::Char(c) => {
-                    match c.value {
-                        '^' => {
-                            write!(writer, "<sup>")?;
-                            decorations.push(Decoration::Sup(c));
-                            continue;
-                        }
-                        '_' => {
-                            write!(writer, "<sub>")?;
-                            decorations.push(Decoration::Sub(c));
-                            continue;
-                        }
-                        _ => {
-                            write!(writer, "{}", c)?;
-                        }
+                Token::Char(c) => match c.value {
+                    '^' => {
+                        write!(writer, "<sup>")?;
+                        decorations.push(Decoration::Sup(c));
+                        continue;
                     }
-                }
+                    '_' => {
+                        write!(writer, "<sub>")?;
+                        decorations.push(Decoration::Sub(c));
+                        continue;
+                    }
+                    _ => {
+                        write!(writer, "{}", c)?;
+                    }
+                },
                 Token::EscapedChar(c) => {
                     write!(writer, "{}", c)?;
                 }
@@ -72,7 +74,11 @@ impl<'a> Text<'a> {
                 Token::Link(text) => {
                     match document.names.get(&text) {
                         Some(&index) => {
-                            write!(writer, "<a href=\"#{}\">", Display::from(document.items[index].identity))?;
+                            write!(
+                                writer,
+                                "<a href=\"#{}\">",
+                                Display::from(document.items[index].identity)
+                            )?;
                             text.print(writer, document)?;
                             write!(writer, "</a>")?;
                         }
@@ -100,8 +106,8 @@ impl<'a> Text<'a> {
             // （次の Token が出力されてからここに来る）
             for decoration in decorations.iter().rev() {
                 match decoration {
-                   Decoration::Sup(_) => write!(writer, "</sup>")?,
-                   Decoration::Sub(_) => write!(writer, "</sub>")?
+                    Decoration::Sup(_) => write!(writer, "</sup>")?,
+                    Decoration::Sub(_) => write!(writer, "</sub>")?,
                 }
             }
             decorations.clear();
@@ -109,8 +115,10 @@ impl<'a> Text<'a> {
         // ここで decoration の中身が残っていたら，
         // Text の最後に ^ か _ があったということ
         match decorations.first() {
-            Some(Decoration::Sup(c)) | Some(Decoration::Sub(c)) => Err(Box::new(TextPrintError::NoDecorationTarget((*c).clone()))),
-            None => Ok(())
+            Some(Decoration::Sup(c)) | Some(Decoration::Sub(c)) => {
+                Err(Box::new(TextPrintError::NoDecorationTarget((*c).clone())))
+            }
+            None => Ok(()),
         }
     }
 }
@@ -137,10 +145,11 @@ impl<'a> Eq for Text<'a> {}
 impl<'a> PartialEq for Token<'a> {
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {
-            (Token::Char(left), Token::Char(right)) | (Token::EscapedChar(left), Token::EscapedChar(right)) => left == right,
-            (Token::Block(left), Token::Block(right)) | (Token::Link(left), Token::Link(right)) | (Token::Paren(left), Token::Paren(right)) => {
-                left == right
-            }
+            (Token::Char(left), Token::Char(right))
+            | (Token::EscapedChar(left), Token::EscapedChar(right)) => left == right,
+            (Token::Block(left), Token::Block(right))
+            | (Token::Link(left), Token::Link(right))
+            | (Token::Paren(left), Token::Paren(right)) => left == right,
             _ => false,
         }
     }

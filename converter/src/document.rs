@@ -1,7 +1,7 @@
 use super::char::{Char, Display};
 use super::source::Expr;
 use super::text::Text;
-use std::collections::{HashMap, BTreeSet};
+use std::collections::{BTreeSet, HashMap};
 use std::error::Error;
 
 pub struct Item<'a, 'b> {
@@ -37,13 +37,13 @@ enum CompileError {
     #[error("identity expected before description")]
     NoIdentityBeforeDesc,
     #[error("duplicate name")]
-    DuplicateName
+    DuplicateName,
 }
 
 #[derive(thiserror::Error, Debug)]
 enum DocumentPrintError {
     #[error("no name")]
-    NoName
+    NoName,
 }
 
 impl<'a, 'b> Document<'a, 'b> {
@@ -66,20 +66,21 @@ impl<'a, 'b> Document<'a, 'b> {
                     }
                 },
                 Expr::Name(name) => match index {
-                    Some(index) => {
-                        match &ret.items[index].name {
-                            Some(prev) => {
-                                if name != *prev {
-                                    eprint!("error: duplicate name for `{}`", Display::from(ret.items[index].identity));
-                                    return Err(Box::new(CompileError::DuplicateName));
-                                }
-                            }
-                            None => {
-                                ret.items[index].name = Some(name);
-                                ret.names.insert(name, index);
+                    Some(index) => match &ret.items[index].name {
+                        Some(prev) => {
+                            if name != *prev {
+                                eprint!(
+                                    "error: duplicate name for `{}`",
+                                    Display::from(ret.items[index].identity)
+                                );
+                                return Err(Box::new(CompileError::DuplicateName));
                             }
                         }
-                    }
+                        None => {
+                            ret.items[index].name = Some(name);
+                            ret.names.insert(name, index);
+                        }
+                    },
                     None => {
                         return Err(Box::new(CompileError::NoIdentityBeforeName));
                     }
@@ -113,7 +114,10 @@ impl<'a, 'b> Document<'a, 'b> {
         Ok(ret)
     }
 
-    pub fn print<Writer: std::io::Write>(&self, mut writer: &mut Writer) -> Result<(), Box<dyn Error>> {
+    pub fn print<Writer: std::io::Write>(
+        &self,
+        mut writer: &mut Writer,
+    ) -> Result<(), Box<dyn Error>> {
         write!(writer, "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>化合物から見る代謝経路</title><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：{}</p></header>", chrono::Utc::now().with_timezone(&chrono::offset::FixedOffset::east(9 * 3600)).format("%Y/%m/%d"))?;
         for (tag, text) in &self.headers {
             write!(writer, "<{}>", Display::from(tag))?;
@@ -121,13 +125,20 @@ impl<'a, 'b> Document<'a, 'b> {
             write!(writer, "</{}>", Display::from(tag))?;
         }
         for item in &self.items {
-            write!(writer, "<div class=\"item\"><div class=\"head\"><p class=\"name\" id=\"{}\">", Display::from(item.identity))?;
+            write!(
+                writer,
+                "<div class=\"item\"><div class=\"head\"><p class=\"name\" id=\"{}\">",
+                Display::from(item.identity)
+            )?;
             match item.name {
                 Some(name) => {
                     name.print(&mut writer, &self)?;
                 }
                 None => {
-                    eprintln!("error: name of `{}` not provided", Display::from(item.identity));
+                    eprintln!(
+                        "error: name of `{}` not provided",
+                        Display::from(item.identity)
+                    );
                     return Err(Box::new(DocumentPrintError::NoName));
                 }
             }

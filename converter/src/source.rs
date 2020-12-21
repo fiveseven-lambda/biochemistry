@@ -123,7 +123,12 @@ impl<'a> Source<'a> {
                     '[' => ret.text.push(Token::Link(self.parse_block(c, ']')?)),
                     '(' => ret.text.push(Token::Paren(self.parse_block(c, ')')?)),
                     c if c == delim => return Ok(ret),
-                    '}' | ']' | ')' => return Err(Box::new(ParseError::BracketsDoesNotMatch(start.clone(), c.clone()))),
+                    '}' | ']' | ')' => {
+                        return Err(Box::new(ParseError::BracketsDoesNotMatch(
+                            start.clone(),
+                            c.clone(),
+                        )))
+                    }
                     _ => ret.text.push(Token::Char(c)),
                 }
             }

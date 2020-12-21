@@ -39,7 +39,7 @@ pub fn search_dir<P: AsRef<Path>>(path: P) -> Result<BTreeMap<usize, PathBuf>, B
             }
         } else {
             // 同じ番号のファイルが複数あると DuplicateKey エラー
-            return Err(Box::new(SearchDirError::NotADirectory(path)))
+            return Err(Box::new(SearchDirError::NotADirectory(path)));
         }
     }
 

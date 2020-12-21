@@ -5,4 +5,5 @@ authors = ["fiveseven-lambda <fiveseven.lambda@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+chrono = "0.4.19"
 thiserror = "1.0.22"

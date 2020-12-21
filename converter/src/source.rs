@@ -2,16 +2,26 @@ use super::char::Char;
 use super::text::Text;
 use super::text::Token;
 
-pub enum Expr<'a> {
-    Identity(&'a [Char]),
-    Name(Text<'a>),
-    Head(&'a [Char], Text<'a>),
-    Desc(&'a [Char], Text<'a>),
-}
-
+// パースのために使う．
 pub struct Source<'a> {
     source: &'a [Char],
     iter: std::iter::Enumerate<std::slice::Iter<'a, Char>>,
+}
+
+pub enum Expr<'a> {
+    // アルファベット，数字， '-' ， ',' で構成された文字列．
+    // リンクの名前になる．
+    Identity(&'a [Char]),
+    // 角括弧 [ ] で囲まれた部分．
+    Name(Text<'a>),
+    // たとえば \p{ 〜 } は
+    // index.html の冒頭で
+    // <p> 〜 </p> になる．
+    Head(&'a [Char], Text<'a>),
+    // 説明文．
+    // +解糖系{ グルコースは酸化されてピルビン酸になる }
+    // の形式で書かれる．
+    Desc(&'a [Char], Text<'a>),
 }
 
 #[derive(thiserror::Error, Debug)]
@@ -20,8 +30,8 @@ enum ParseError {
     UnexpectedCharacter(Char),
     #[error("no closing bracket to match `{0}` at {0:b}")]
     NoClosingBracket(Char),
-    #[error("no opening bracket to match `{0}` at {0:b}")]
-    NoOpeningBracket(Char),
+    #[error("brackets `{0}` at {0:b} and `{1}` at {1:b} does not match")]
+    BracketsDoesNotMatch(Char, Char),
     #[error("unexpected end of file")]
     UnexpectedEndOfFile,
 }
@@ -29,6 +39,12 @@ enum ParseError {
 use std::error::Error;
 
 impl<'a> Source<'a> {
+    // イテレータをもっておく．
+    // parse() から parse_block()
+    // parse_block() から parse_block()
+    // を呼び出したときに，
+    // イテレータを引数として渡す必要がない．
+    // （ある意味，グローバル変数のような使い方）
     pub fn from(source: &'a [Char]) -> Source<'a> {
         Source {
             source: source,
@@ -95,14 +111,21 @@ impl<'a> Source<'a> {
 
     fn parse_block(&mut self, start: &Char, delim: char) -> Result<Text<'a>, Box<dyn Error>> {
         let mut ret = Text { text: Vec::new() };
+        let mut escaped = false;
         while let Some((_, c)) = self.iter.next() {
-            match c.value {
-                '{' => ret.text.push(Token::Block(self.parse_block(c, '}')?)),
-                '[' => ret.text.push(Token::Link(self.parse_block(c, ']')?)),
-                '(' => ret.text.push(Token::Paren(self.parse_block(c, ')')?)),
-                c if c == delim => return Ok(ret),
-                '}' | ']' | ')' => return Err(Box::new(ParseError::NoOpeningBracket(c.clone()))),
-                _ => ret.text.push(Token::Char(c)),
+            if escaped {
+                ret.text.push(Token::EscapedChar(c));
+                escaped = false;
+            } else {
+                match c.value {
+                    '\\' => escaped = true,
+                    '{' => ret.text.push(Token::Block(self.parse_block(c, '}')?)),
+                    '[' => ret.text.push(Token::Link(self.parse_block(c, ']')?)),
+                    '(' => ret.text.push(Token::Paren(self.parse_block(c, ')')?)),
+                    c if c == delim => return Ok(ret),
+                    '}' | ']' | ')' => return Err(Box::new(ParseError::BracketsDoesNotMatch(start.clone(), c.clone()))),
+                    _ => ret.text.push(Token::Char(c)),
+                }
             }
         }
         return Err(Box::new(ParseError::NoClosingBracket(start.clone())));

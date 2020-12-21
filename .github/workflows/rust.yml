@@ -31,6 +31,8 @@ jobs:
       run: converter/target/release/converter
     - name: Commit
       run: |
-        git add index.html
-        git commit -m "compiled source -> index.html, $(date)"
-        git push origin release
+        if [ "$(git diff)" != "" ]; then
+          git add index.html
+          git commit -m "compiled source -> index.html, $(date)"
+          git push origin release
+        fi

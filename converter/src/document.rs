@@ -118,7 +118,29 @@ impl<'a, 'b> Document<'a, 'b> {
         &self,
         mut writer: &mut Writer,
     ) -> Result<(), Box<dyn Error>> {
-        write!(writer, "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>化合物から見る代謝経路</title><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：{}</p></header>", chrono::Utc::now().with_timezone(&chrono::offset::FixedOffset::east(9 * 3600)).format("%Y/%m/%d"))?;
+        // <body> 冒頭の <header> タグ内に最終更新日を書くために，
+        // ここだけ source に記述せずプログラム内に直接書いている．
+        // これを source に書くとしたら
+        // \date; のようなコマンド記法を導入することになるが
+        // このためだけにわざわざそこまでするのもなんだかなぁという感じ．
+        write!(
+            writer,
+            "<!DOCTYPE html>\
+            <html>\
+                <head>\
+                    <meta charset=\"utf-8\">\
+                    <title>化合物から見る代謝経路</title>\
+                    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\
+                </head>\
+                <body>\
+                    <header>\
+                        <h1>化合物から見る代謝経路</h1>\
+                        <p>最終更新日：{}</p>\
+                    </header>",
+            chrono::Utc::now()
+                .with_timezone(&chrono::offset::FixedOffset::east(9 * 3600))
+                .format("%Y/%m/%d"),
+        )?;
         for (tag, text) in &self.headers {
             write!(writer, "<{}>", Display::from(tag))?;
             text.print(&mut writer, &self)?;

@@ -2,39 +2,55 @@ use std::error::Error;
 use super::char::{Char, Display};
 use super::document::Document;
 
+// { } で囲まれた部分が Text となる．
+// "\p{ }" のようなヘッダー部分と
+// "+解糖系{ グルコースが分解されてピルビン酸になる }" のような説明部分が該当する
+
+// Text は Token の列
 pub struct Text<'a> {
     pub text: Vec<Token<'a>>,
 }
 
 pub enum Token<'a> {
-    Char(&'a Char),
-    EscapedChar(&'a Char),
-    Block(Text<'a>),
-    Link(Text<'a>),
-    Paren(Text<'a>),
+    Char(&'a Char), // 普通の文字
+    EscapedChar(&'a Char), // バックスラッシュでエスケープされた文字
+    Block(Text<'a>), // 波括弧 { } で囲まれた部分．波括弧自体は出力されない
+    Link(Text<'a>), // 角括弧 [ ] で囲まれた部分．ハイパーリンクになる
+    Paren(Text<'a>), // 丸括弧 ( ) で囲まれた部分．丸括弧も含めて出力される
 }
+
+// ^ （上付き）と _ （下付き）は，
+// 直後の Token 1 個を修飾する．
+// たとえば ^{〜} と書くとブロック全体が上付きになる．
 
 #[derive(thiserror::Error, Debug)]
 enum TextPrintError{
     #[error("no text after `{0}` at {0:b}")]
-    NoDecorationTarget(Char),
+    NoDecorationTarget(Char), // ^ や _ の直後に何も無い場合
+}
+
+enum Decoration<'a>{
+    Sup(&'a Char),
+    Sub(&'a Char),
 }
 
 impl<'a> Text<'a> {
+    // Text を index.html に出力するときに使う．
+    // [ ] をリンクにするために，引数で受け取った Document を参照する．
     pub fn print<Writer: std::io::Write>(&self, writer: &mut Writer, document: &Document) -> Result<(), Box<dyn Error>> {
-        let mut decorations = Vec::<&Char>::new();
+        let mut decorations = Vec::new();
         for token in &self.text {
             match token {
                 Token::Char(c) => {
                     match c.value {
                         '^' => {
                             write!(writer, "<sup>")?;
-                            decorations.push(c);
+                            decorations.push(Decoration::Sup(c));
                             continue;
                         }
                         '_' => {
                             write!(writer, "<sub>")?;
-                            decorations.push(c);
+                            decorations.push(Decoration::Sub(c));
                             continue;
                         }
                         _ => {
@@ -61,6 +77,11 @@ impl<'a> Text<'a> {
                             write!(writer, "</a>")?;
                         }
                         None => {
+                            // たとえば "[グルコース]" とあるのに
+                            // グルコースが見つからなかったとき：
+                            // 警告を出した上で，
+                            // リンクにする代わりに <span class="no_link"> </span> で囲む．
+                            // "no_link" は style.css で赤文字などにする．
                             eprint!("Warning: '");
                             text.print(&mut std::io::BufWriter::new(std::io::stderr()), document)?;
                             eprintln!("' not found");
@@ -71,21 +92,31 @@ impl<'a> Text<'a> {
                     }
                 }
             }
+            // decorations を逆から見て，
+            // <sup> と </sup>， <sub> と </sub> が
+            // それぞれ対応するようにする．
+            // Token が ^ か _ だったときは，
+            // continue されるのでここには達しない
+            // （次の Token が出力されてからここに来る）
             for decoration in decorations.iter().rev() {
-                match decoration.value {
-                   '^' => write!(writer, "</sup>")?,
-                   '_' => write!(writer, "</sub>")?,
-                   _ => unreachable!()
+                match decoration {
+                   Decoration::Sup(_) => write!(writer, "</sup>")?,
+                   Decoration::Sub(_) => write!(writer, "</sub>")?
                 }
             }
             decorations.clear();
         }
+        // ここで decoration の中身が残っていたら，
+        // Text の最後に ^ か _ があったということ
         match decorations.first() {
-            Some(&c) => Err(Box::new(TextPrintError::NoDecorationTarget(c.clone()))),
+            Some(Decoration::Sup(c)) | Some(Decoration::Sub(c)) => Err(Box::new(TextPrintError::NoDecorationTarget((*c).clone()))),
             None => Ok(())
         }
     }
 }
+
+// document.rs で HashMap のキーにするので
+// Eq と Hash を impl
 
 impl<'a> PartialEq for Text<'a> {
     fn eq(&self, other: &Self) -> bool {

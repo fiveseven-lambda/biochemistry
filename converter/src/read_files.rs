@@ -9,6 +9,7 @@ use super::char::Char;
 
 pub fn read_files(paths: &BTreeMap<usize, PathBuf>) -> Result<Vec<Char>, Box<dyn Error>> {
     let mut ret = Vec::new();
+    // paths のキーは，ファイル名先頭の番号
     for (&i, path) in paths {
         for (j, line) in BufReader::new(File::open(path)?).lines().enumerate() {
             let mut count = 0usize;
@@ -21,6 +22,7 @@ pub fn read_files(paths: &BTreeMap<usize, PathBuf>) -> Result<Vec<Char>, Box<dyn
                 });
                 count += 1;
             }
+            // 改行は，その行の最後の文字とする
             ret.push(Char {
                 value: '\n',
                 file: i,

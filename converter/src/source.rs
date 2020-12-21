@@ -2,16 +2,26 @@ use super::char::Char;
 use super::text::Text;
 use super::text::Token;
 
-pub enum Expr<'a> {
-    Identity(&'a [Char]),
-    Name(Text<'a>),
-    Head(&'a [Char], Text<'a>),
-    Desc(&'a [Char], Text<'a>),
-}
-
+// パースのために使う．
 pub struct Source<'a> {
     source: &'a [Char],
     iter: std::iter::Enumerate<std::slice::Iter<'a, Char>>,
+}
+
+pub enum Expr<'a> {
+    // アルファベット，数字， '-' ， ',' で構成された文字列．
+    // リンクの名前になる．
+    Identity(&'a [Char]),
+    // 角括弧 [ ] で囲まれた部分．
+    Name(Text<'a>),
+    // たとえば \p{ 〜 } は
+    // index.html の冒頭で
+    // <p> 〜 </p> になる．
+    Head(&'a [Char], Text<'a>),
+    // 説明文．
+    // +解糖系{ グルコースは酸化されてピルビン酸になる }
+    // の形式で書かれる．
+    Desc(&'a [Char], Text<'a>),
 }
 
 #[derive(thiserror::Error, Debug)]
@@ -29,6 +39,12 @@ enum ParseError {
 use std::error::Error;
 
 impl<'a> Source<'a> {
+    // イテレータをもっておく．
+    // parse() から parse_block()
+    // parse_block() から parse_block()
+    // を呼び出したときに，
+    // イテレータを引数として渡す必要がない．
+    // （ある意味，グローバル変数のような使い方）
     pub fn from(source: &'a [Char]) -> Source<'a> {
         Source {
             source: source,

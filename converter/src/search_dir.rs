@@ -17,17 +17,21 @@ enum SearchDirError {
 pub fn search_dir<P: AsRef<Path>>(path: P) -> Result<BTreeMap<usize, PathBuf>, Box<dyn Error>> {
     let mut ret = BTreeMap::new();
 
-    for entry in read_dir(path)? {
+    'entries: for entry in read_dir(path)? {
         let path = entry?.path();
         if path.is_file() {
             let file_name = path.file_name().ok_or("")?.to_str().ok_or("")?;
             let num = {
-                // 名前の先頭に数字が付いていないファイルは 0 番
+                // 名前の先頭に数字が付いていないファイルは無視
                 let mut num = 0usize;
-                for c in file_name.chars() {
+                for (i, c) in file_name.char_indices() {
                     match c.to_digit(10) {
                         Some(d) => num = num * 10 + d as usize,
-                        None => break,
+                        None => if i == 0 {
+                            continue 'entries;
+                        } else {
+                            break;
+                        }
                     }
                 }
                 num
@@ -39,7 +43,7 @@ pub fn search_dir<P: AsRef<Path>>(path: P) -> Result<BTreeMap<usize, PathBuf>, B
             }
         } else {
             // 同じ番号のファイルが複数あると DuplicateKey エラー
-            return Err(Box::new(SearchDirError::NotADirectory(path)))
+            return Err(Box::new(SearchDirError::NotADirectory(path)));
         }
     }
 

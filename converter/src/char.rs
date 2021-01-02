@@ -5,7 +5,7 @@ pub struct Char {
     pub value: char,
     pub file: usize, // どの番号のファイル？（ファイル名先頭の数字）
     pub line: usize, // 何行目？
-    pub pos: usize, // 何文字目？
+    pub pos: usize,  // 何文字目？
 }
 
 // document.rs で HashMap のキーとするので
@@ -46,12 +46,12 @@ impl fmt::Binary for Char {
 
 // &[Char] を出力したいとき， Display::from に渡してから println! とか write! に渡す．
 pub struct Display<'a> {
-    text: &'a [Char]
+    text: &'a [Char],
 }
 
-impl<'a> Display<'a>{
+impl<'a> Display<'a> {
     pub fn from(text: &'a [Char]) -> Display<'a> {
-        Display{ text: text }
+        Display { text: text }
     }
 }
 

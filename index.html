@@ -1,12 +1,12 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>化合物から見る代謝経路</title><link rel="stylesheet" type="text/css" href="style.css"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：2021/01/02</p></header><p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>化合物から見る代謝経路</title><link rel="stylesheet" type="text/css" href="style.css"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：2021/02/07</p></header><p>
 	生化学の教科書には様々な代謝経路の流れが順序立って書かれている．
 	一方この記事は，森の代わりに木を見るかのように，
 	個々の化合物が代謝の中でどういう役割を担っているか記述する．
 	この記事を読んで代謝を学ぶというよりは，辞書のように使われることを想定する．
 </p><div class="item"><div class="head"><p class="name" id="glucose">グルコース</p><p class="group">解糖系・糖新生</p></div><div class="descs"><p class="desc">
 	米やパンや麺など，いわゆる炭水化物の多くを構成する単糖．
-	デンプンはグルコースがつながってできる高分子であり，
-	消化液中のアミラーゼによってグルコースへと分解され，吸収される．
+	マルトース（Glc(α1→4)Glc）やトレハロース（Glc(α1↔1α)Glc）などの 2 糖をつくる．
+	<a href="#starch">デンプン</a>や<a href="#glycogen">グリコーゲン</a>として貯蔵される．
 </p><p class="desc">
 	ヒトの細胞は GLUT 輸送体によってグルコースを取り込む．
 	GLUT 輸送体は，目的に応じていくつかの種類があり，取り込む速さや性質が異なる．
@@ -14,13 +14,13 @@
 	これを迅速に可能にするために，肝臓の輸送体（ GLUT1 ， GLUT2 ）は常に細胞膜上にあってグルコースを出し入れできる状態である．
 	また，脳はグルコースに強く依存するため，脳の輸送体（ GLUT3 ）も常に細胞膜上にある．
 	一方，骨格筋は常にグルコースを取り込み続けるわけではない．
-	血糖値が高いときだけグルコースを取り込んで<span class="no_link">グリコーゲン</span>として貯蔵しておき，
+	血糖値が高いときだけグルコースを取り込んで<a href="#glycogen">グリコーゲン</a>として貯蔵しておき，
 	激しい運動時にそれをグルコースに分解してエネルギーに変換する．
 	よって筋肉の輸送体（ GLUT4 ）は普段細胞内の小胞体に隔離されていて，
 	インスリンの刺激を受けると細胞表面に現れてグルコースを取り込むようになっている．
 </p><p class="desc">
 	GLUT 輸送体は受動輸送，すなわち細胞内外の濃度勾配に従ってグルコースを輸送する．
-	そのため，細胞内のグルコース濃度が高くなるとグルコースが取り込みにくくなってしまう．
+	そのため，細胞内のグルコース濃度が高くなるとグルコースを取り込みにくくなってしまう．
 	細胞がグルコースを必要としているとき，
 	細胞内のグルコースはヘキソキナーゼによって即座に<a href="#glucose-6-phosphate">グルコース 6-リン酸</a>に変換される<sub>(ATP→ADP, Mg<sup>2+</sup>依存)</sub>．
 	グルコース 6-リン酸は輸送体を通って細胞内外を移動することができない．
@@ -30,83 +30,227 @@
 	血糖値，すなわち血液中のグルコース濃度は，一定の値に保つことが重要である．
 	この調節は，グルカゴンとインスリンの 2 つのホルモンによって行われる．
 	血糖値が低いときには膵臓のランゲルハンス島 A 細胞からグルカゴンが分泌される．
-	肝臓はこれに反応して，<span class="no_link">グリコーゲン</span>を分解したり糖新生を行ったりしてグルコースを生成し，血中へと放出する．
+	肝臓はこれに反応して，<a href="#glycogen">グリコーゲン</a>を分解したり糖新生を行ったりしてグルコースを生成し，血中へと放出する．
 	一方，血糖値が高いときにはランゲルハンス島 B 細胞からインスリンが分泌される．
 	肝臓や骨格筋はこれに反応して，グルコースを積極的に細胞内へと取り込み，血糖値を下げる．
-</p></div></div><div class="item"><div class="head"><p class="name" id="fructose">フルクトース</p><p class="group"></p></div><div class="descs"><p class="desc">
-	果糖とも呼ばれ，果物などに含まれている．
 </p></div></div><div class="item"><div class="head"><p class="name" id="galactose">ガラクトース</p><p class="group"></p></div><div class="descs"><p class="desc">
-	食事に含まれる糖．ラクトース（乳糖）などに含まれる．
+	食事に含まれる糖．
+	ラクトース（Gal(β1→4)Glc）に含まれる．
+</p><p class="desc">
+	肝臓でガラクトキナーゼによって<a href="#galactose-1-phosphate">ガラクトース 1-リン酸</a>に変換される<sub>(ATP→ADP)</sub>．
+</p></div></div><div class="item"><div class="head"><p class="name" id="fructose">フルクトース</p><p class="group"></p></div><div class="descs"><p class="desc">
+	ケトース．
+	スクロース（Glc(α1↔2β)Fru）に含まれる．
+</p><p class="desc">
+	筋肉や腎臓では，ヘキソキナーゼによって 6 位炭素がリン酸化され，<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>となる．
+	一方，肝臓ではフルクトキナーゼによって 1 位炭素がリン酸化され，<a href="#fructose-1-phosphate">フルクトース 1-リン酸</a>となる．
 </p></div></div><div class="item"><div class="head"><p class="name" id="mannose">マンノース</p><p class="group"></p></div><div class="descs"><p class="desc">
 	果実などに含まれる．
-</p></div></div><div class="item"><div class="head"><p class="name" id="glucose-6-phosphate">グルコース 6-リン酸</p><p class="group">解糖系・糖新生</p></div><div class="descs"><p class="desc">
+</p><p class="desc">
+	ヘキソキナーゼによって 6 位炭素がリン酸化され，マンノース 6-リン酸となった後，
+	ホスホマンノースイソメラーゼによって<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>に変換される．
+</p></div></div><div class="item"><div class="head"><p class="name" id="starch">デンプン</p><p class="group"></p></div><div class="descs"><p class="desc">
+	植物における糖の貯蔵形態．枝分かれのないアミロースと， α1→6 結合による枝分かれのあるアミロペクチンがある．
+	消化液中のアミラーゼによってグルコースへと加水分解され，吸収される．
+</p><p class="desc">
+	貯蔵細胞内では，デンプンホスホリラーゼによって非還元末端のグルコース残基が<a href="#glucose-1-phosphate">グルコース 1-リン酸</a>として切り出される<sub>(P<sub>i</sub> 消費)</sub>．
+</p></div></div><div class="item"><div class="head"><p class="name" id="glycogen">グリコーゲン</p><p class="group"></p></div><div class="descs"><p class="desc">
+	動物における糖の貯蔵形態．
+	α1→6 結合による多くの枝分かれがある．
+	消化液中のアミラーゼによってグルコースへと加水分解され，吸収される．
+</p><p class="desc">
+	グリコーゲンホスホリラーゼ<sub>(PLP 依存)</sub>は，グリコーゲンの α1→4 結合を加リン酸分解し，非還元末端のグルコース残基を<a href="#glucose-1-phosphate">グルコース 1-リン酸</a>として切り出す．
+	脱分枝酵素オリゴ(α1→6)→(α1→4)グルカントランスフェラーゼは，グリコーゲンの α1→6 結合による分枝を末端へと転移し， α1→4 結合にする．
+</p></div></div><div class="item"><div class="head"><p class="name" id="glucose-6-phosphate">グルコース 6-リン酸</p><p class="group">解糖系・糖新生・グリコーゲン代謝・ペントースリン酸経路</p></div><div class="descs"><p class="desc">
 	ヘキソキナーゼによって，<a href="#glucose">グルコース</a>の 6 位炭素がリン酸化されたもの．
 	GLUT 輸送体を通って細胞内に入ったグルコースがグルコース 6-リン酸に変換されると，
 	再び細胞外に出ていくことができなくなる．
 </p><p class="desc">
-	肝臓のヘキソキナーゼは特にグルコキナーゼと呼ばれる．
+	ヘキソキナーゼには I から IV までのアイソザイムがある．
+	ヘキソキナーゼ IV は肝臓に存在し，特にグルコキナーゼと呼ばれる．
 	血糖値が低いとき，グルコキナーゼは調節タンパク質による阻害を受けて核内に隔離されているため，肝細胞はグルコースを取り込めない．
 	しかし肝細胞内のグルコース濃度が上がると，グルコキナーゼが働き，解糖によって血糖値を下げることができるようになる．
+</p><p class="desc">
 	また，肝臓にはグルコース 6-リン酸を<a href="#glucose">グルコース</a>と無機リン酸 P<sub>i</sub> に分解する
 	グルコース 6-ホスファターゼが存在するため，グリコーゲン分解や糖新生によって得られたグルコース 6-リン酸をグルコースに変換して血中に放出し，血糖値を上げることができる．
+	グルコース 6-ホスファターゼはヘキソキナーゼと逆の反応を行うため，小胞体内に局在し，ヘキソキナーゼの存在するサイトゾルから隔離されている．
+	また，筋肉にはグルコース 6-ホスファターゼが存在しない．
 </p><p class="desc">
-	ホスホヘキソースイソメラーゼによって<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>に変換される<sub>(Mg<sup>2+</sup>依存，可逆)</sub>．
+	解糖系では，ホスホヘキソースイソメラーゼによって<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>に変換される<sub>(Mg<sup>2+</sup>依存，可逆)</sub>．
+</p><p class="desc">
+	グリコーゲン代謝では，ホスホグルコムターゼによって<a href="#glucose-1-phosphate">グルコース 1-リン酸</a>に変換される<sub>(可逆)</sub>．
+</p><p class="desc">
+	ペントースリン酸経路では，
+	グルコース 6-リン酸デヒドロゲナーゼ<sub>(Mg<sup>2+</sup>依存)</sub>によって
+	NADP<sup>+</sup> を用いて酸化されて
+	6-ホスホグルコノ-δ-ラクトンとなった後，
+	ラクトナーゼ<sub>(Mg<sup>2+</sup>依存)</sub>によって加水分解されて
+	<a href="#6-phosphogluconic-acid">6-ホスホグルコン酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="glucose-1-phosphate">グルコース 1-リン酸</p><p class="group">グリコーゲン代謝</p></div><div class="descs"><p class="desc">
+	グリコーゲンホスホリラーゼ<sub>(PLP 依存)</sub>による<a href="#glycogen">グリコーゲン</a>の分解で生じる．
+	この酵素は，エピネフリン（アドレナリン）やグルカゴンの刺激による細胞内 cAMP 濃度上昇に端を発するカスケードによって活性化される．
+</p><p class="desc">
+	UDP-グルコースピロホスホリラーゼによって UTP と反応し， <a href="#UDP-glucose">UDP-グルコース</a>になる．
+</p><p class="desc">
+	ホスホグルコムターゼによって<a href="#glucose-6-phosphate">グルコース 6-リン酸</a>に変換される<sub>(可逆)</sub>．
+</p></div></div><div class="item"><div class="head"><p class="name" id="galactose-1-phosphate">ガラクトース 1-リン酸</p><p class="group">ガラクトース代謝</p></div><div class="descs"><p class="desc">
+	ガラクトキナーゼ<sub>(ATP→ADP)</sub>によって<a href="#galactose">ガラクトース</a>の 1 位炭素がリン酸化されたもの．
+	UDP-グルコース：ガラクトース 1-リン酸ウリジルトランスフェラーゼによって <a href="#UDP-glucose">UDP-グルコース</a>と反応し， <a href="#UDP-galactose">UDP-ガラクトース</a>になる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="UDP-glucose">UDP-グルコース</p><p class="group">グリコーゲン代謝・ガラクトース代謝</p></div><div class="descs"><p class="desc">
+	UDP-グルコースピロホスホリラーゼによって<a href="#glucose-1-phosphate">グルコース 1-リン酸</a>と UTP （ウリジン三リン酸）が反応し，
+	<a href="#glucose">グルコース</a>と UDP （ウリジン二リン酸）が結合した糖ヌクレオチドとなって活性化されたもの．
+</p><p class="desc">
+	グリコゲニンは，そのグリコシルトランスフェラーゼ活性によって UDP-グルコースのグルコース残基を自らに転移し，<a href="#glycogen">グリコーゲン</a>合成を開始する．
+	グリコーゲンシンターゼは， UDP-グルコースのグルコース残基をグリコーゲンの非還元末端に転移し，グリコーゲン鎖を伸長する．
+	グリコーゲンシンターゼは脱リン酸化によって活性化される．
+</p><p class="desc">
+	UDP-グルコース：ガラクトース 1-リン酸ウリジルトランスフェラーゼは， <a href="#UDP-glucose">UDP-グルコース</a>と<a href="#galactose-1-phosphate">ガラクトース 1-リン酸</a>を <a href="#UDP-galactose">UDP-ガラクトース</a>と<a href="#glucose-1-phosphate">グルコース 1-リン酸</a>に変換する．
+</p></div></div><div class="item"><div class="head"><p class="name" id="UDP-galactose">UDP-ガラクトース</p><p class="group">ガラクトース代謝</p></div><div class="descs"><p class="desc">
+	UDP-グルコース：ガラクトース 1-リン酸ウリジルトランスフェラーゼによって <a href="#UDP-glucose">UDP-グルコース</a>由来の UDP に<a href="#galactose-1-phosphate">ガラクトース 1-リン酸</a>由来のガラクトースが結合して生じる．
+</p><p class="desc">
+	UDP-グルコース 4-エピメラーゼによって，エピマーである <a href="#UDP-glucose">UDP-グルコース</a>に変換される．
 </p></div></div><div class="item"><div class="head"><p class="name" id="fructose-6-phosphate">フルクトース 6-リン酸</p><p class="group">解糖系</p></div><div class="descs"><p class="desc">
+	<a href="#fructose">フルクトース</a>の 6 位炭素にリン酸基が結合したもの．
+</p><p class="desc">
 	<a href="#glucose-6-phosphate">グルコース 6-リン酸</a>からホスホヘキソースイソメラーゼ<sub>(Mg<sup>2+</sup>依存，可逆)</sub>によって，
 	あるいは<a href="#fructose">フルクトース</a>からヘキソキナーゼ<sub>(ATP→ADP，Mg<sup>2+</sup>依存)</sub>によって得られる．
 </p><p class="desc">
+	トランスケトラーゼによる<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>から<a href="#erythrose-4-phosphate">エリトロース 4-リン酸</a>への 2 炭素転移，
+	あるいはトランスアルドラーゼによる<a href="#sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</a>から<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>への 3 炭素転移によって得られる．
+</p><p class="desc">
 	ホスホフルクトキナーゼ-1 によって<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>に変換される<sub>(ATP→ADP，Mg<sup>2+</sup>依存，不可逆)</sub>．
 	肝臓ではホスホフルクトキナーゼ-2 によって<a href="#fructose-2,6-bisphosphate">フルクトース 2,6-ビスリン酸</a>にも変換される<sub>(ATP→ADP)</sub>．
+</p></div></div><div class="item"><div class="head"><p class="name" id="fructose-1-phosphate">フルクトース 1-リン酸</p><p class="group">フルクトース代謝</p></div><div class="descs"><p class="desc">
+	肝臓の酵素フルクトキナーゼによって<a href="#fructose">フルクトース</a>から得られる．
+	フルクトース 1-リン酸アルドラーゼによって，グリセルアルデヒドと<a href="#dihydroxyacetone-phosphate">ジヒドロキシアセトンリン酸</a>に開裂する．
+	グリセルアルデヒドはトリオースキナーゼによって<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>となる．
 </p></div></div><div class="item"><div class="head"><p class="name" id="fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</p><p class="group">解糖系・糖新生</p></div><div class="descs"><p class="desc">
+	<a href="#fructose">フルクトース</a>の 1 位炭素， 6 位炭素にリン酸基が一つずつ結合したもの．
+	「ビス」は 2 つのリン酸基が異なる場所に結合していることを表す．
+</p><p class="desc">
 	ホスホフルクトキナーゼ-1 によって<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>から得られる<sub>(ATP→ADP または PP<sub>i</sub>→P<sub>i</sub>，Mg<sup>2+</sup>依存)</sub>．
 	この反応は ATP が少ないときに促進され，多いときに阻害される．また ADP ， AMP の蓄積によっても促進される．
 </p><p class="desc">
 	肝臓ではフルクトース 1,6-ビスホスファターゼによってフルクトース 1,6-ビスリン酸からフルクトース 6-リン酸に戻る反応も起こる（ただし ATP は得られない）．
 	すなわち肝臓ではフルクトース 6-リン酸とフルクトース 1,6-ビスリン酸の間の相互変換が常に起こっている．
+	これを無益回路という．
+</p><p class="desc">
 	<a href="#fructose-2,6-bisphosphate">フルクトース 2,6-ビスリン酸</a>はホスホフルクトキナーゼ-1 を活性化し，フルクトース 1,6-ビスホスファターゼを阻害するため，
 	フルクトース 2,6-ビスリン酸の濃度が高いとフルクトース 6-リン酸からフルクトース 1,6-ビスリン酸への変換が進み，
-	フルクトース 2,6-ビスリン酸の濃度が低いとフルクトース 1,6-ビスリン酸からフルクトース 6-リン酸への変換が進む．
+	逆にフルクトース 2,6-ビスリン酸の濃度が低いとフルクトース 1,6-ビスリン酸からフルクトース 6-リン酸への変換が進む．
 </p><p class="desc">
 	また，アルドラーゼ A による開裂を経て，<a href="#dihydroxyacetone-phosphate">ジヒドロキシアセトンリン酸</a>と<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>になる<sub>(可逆)</sub>．
 </p></div></div><div class="item"><div class="head"><p class="name" id="fructose-2,6-bisphosphate">フルクトース 2,6-ビスリン酸</p><p class="group">解糖系・糖新生</p></div><div class="descs"><p class="desc">
+	<a href="#fructose">フルクトース</a>の 2 位炭素， 6 位炭素にリン酸基が一つずつ結合したもの．
+</p><p class="desc">
 	肝臓において，ホスホフルクトキナーゼ-2 によって<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>から得られ<sub>(ATP→ADP)</sub>，
 	フルクトース 2,6-ビスホスファターゼによってフルクトース 6-リン酸に戻る（このとき ATP は得られない）．
 	これらの 2 つの酵素は同じタンパク質内の 2 つの部位として存在しており，
 	リン酸化を受けると後者が，脱リン酸化を受けると前者が亢進される．
 	グルカゴンの刺激はこれをリン酸化，インスリンの刺激はこれを脱リン酸化する．
-	また，<span class="no_link">キシルロース 5-リン酸</span>はこれの脱リン酸化を促進する．
+	また，<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>はこれの脱リン酸化を促進する．
 </p><p class="desc">
 	フルクトース 2,6-ビスリン酸は，
 	ホスホフルクトキナーゼ-1 による<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>の生成を促進し，
 	フルクトース 1,6-ビスホスファターゼによるフルクトース 1,6-ビスリン酸の脱リン酸化を阻害する．
-</p></div></div><div class="item"><div class="head"><p class="name" id="dihydroxyacetone-phosphate">ジヒドロキシアセトンリン酸</p><p class="group">解糖系</p></div><div class="descs"><p class="desc">
-	<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>，<span class="no_link">フルクトース 1-リン酸</span>のアルドラーゼによる開裂<sub>(可逆)</sub>で得られる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="dihydroxyacetone-phosphate">ジヒドロキシアセトンリン酸</p><p class="group">解糖系・グリセロール新生</p></div><div class="descs"><p class="desc">
+	3 炭糖．アセトンの 1 位炭素， 3 位炭素にそれぞれヒドロキシ基が結合し，そのうち一方にさらにリン酸基が結合したもの．
+</p><p class="desc">
+	<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>，<a href="#fructose-1-phosphate">フルクトース 1-リン酸</a>のアルドラーゼによる開裂<sub>(可逆)</sub>で得られる．
 	トリオースリン酸イソメラーゼによって<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>となり<sub>(可逆)</sub>，この酵素が欠損すると致命的な溶血性貧血が起こる．
+</p><p class="desc">
+	グリセロール 3-リン酸デヒドロゲナーゼによって<span class="no_link">グリセロール 3-リン酸</span>へと還元される．
 </p></div></div><div class="item"><div class="head"><p class="name" id="glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</p><p class="group">解糖系</p></div><div class="descs"><p class="desc">
+	3 炭糖．<span class="no_link">グリセロール</span>の 1 位炭素を酸化して得られるアルデヒドの 3 位炭素にリン酸基が結合したもの．
+</p><p class="desc">
 	アルドラーゼによる開裂を含む一連の反応によって，
-	1 分子の<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>，あるいは1分子の<span class="no_link">フルクトース 1-リン酸</span>から
+	1 分子の<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>，あるいは1分子の<a href="#fructose-1-phosphate">フルクトース 1-リン酸</a>から
 	2 分子のグリセルアルデヒド 3-リン酸が得られる．
+</p><p class="desc">
+	また，トランスケトラーゼによって<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>が 2 炭素を失うことで生じる．
 </p><p class="desc">
 	グリセルアルデヒド 3-リン酸デヒドロゲナーゼ<sub>(NAD<sup>+</sup>⇄NADH+H<sup>+</sup>, P<sub>i</sub>消費)</sub>．
 	ホスホグリセリン酸キナーゼ<sub>(ADP⇄ATP)</sub>，
 	ホスホグリセリン酸ムターゼ<sub>(Mg<sup>2+</sup>依存)</sub>，
 	エノラーゼによる一連の平衡反応を経て，<a href="#phosphoenolpyruic-acid">ホスホエノールピルビン酸</a>となる．
 </p></div></div><div class="item"><div class="head"><p class="name" id="phosphoenolpyruic-acid">ホスホエノールピルビン酸</p><p class="group">解糖系・糖新生</p></div><div class="descs"><p class="desc">
-    エノラーゼ，ホスホグリセリン酸ムターゼ<sub>(Mg<sup>2+</sup>依存)</sub>，ホスホグリセリン酸キナーゼ<sub>(ATP⇄ADP)</sub>，グリセルアルデヒド3-リン酸デヒドロゲナーゼ<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>，P<sub>i</sub>生成)</sub>による一連の平衡反応で，<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>となる．
+	<a href="#pyruvic-acid">ピルビン酸</a>のケトエノール互変異性体のうちエノール型のものにリン酸基が結合したもの．
+	ミトコンドリア内外を移動することができる．
+</p><p class="desc">
+	エノラーゼ，ホスホグリセリン酸ムターゼ<sub>(Mg<sup>2+</sup>依存)</sub>，ホスホグリセリン酸キナーゼ<sub>(ATP⇄ADP)</sub>，グリセルアルデヒド3-リン酸デヒドロゲナーゼ<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>，P<sub>i</sub>生成)</sub>による一連の平衡反応を経て，<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>となる．
 </p><p class="desc">
 	ピルビン酸キナーゼによって，<a href="#pyruvic-acid">ピルビン酸</a>に変換される<sub>(ADP→ATP，不可逆，K<sup>+</sup>依存，Mg<sup>2+</sup>またはMn<sup>2+</sup>依存)</sub>．
 	この反応は，<a href="#fructose-1,6-bisphosphate">フルクトース 1,6-ビスリン酸</a>によって促進される．
-</p></div></div><div class="item"><div class="head"><p class="name" id="pyruvic-acid">ピルビン酸</p><p class="group">解糖系</p></div><div class="descs"><p class="desc">
-	酸素が不足していると，細胞質で乳酸デヒドロゲナーゼによって<a href="#lactic-acid">乳酸</a>となる<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>．
+</p></div></div><div class="item"><div class="head"><p class="name" id="pyruvic-acid">ピルビン酸</p><p class="group">解糖系・発酵</p></div><div class="descs"><p class="desc">
+	炭素数 3 ．解糖系の最終産物であり，糖新生と<span class="no_link">グリセロール</span>新生の出発点である．ミトコンドリア内外を移動できる．
 </p><p class="desc">
-	エタノール発酵を行う微生物では，ピルビン酸デカルボキシラーゼによって<a href="#acetaldehyde">アセトアルデヒド</a>と CO<sub>2</sub> に分解される<sub>(TPP依存，不可逆)</sub>．
-</p></div></div><div class="item"><div class="head"><p class="name" id="lactic-acid">乳酸</p><p class="group">解糖系</p></div><div class="descs"><p class="desc">
-	酸素が不足しているとき，細胞質で乳酸デヒドロゲナーゼによって<a href="#pyruvic-acid">ピルビン酸</a>から得られる<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>．
-	特に，激しい運動時に筋肉中でNAD<sup>+</sup>が不足した際，乳酸発酵によってNAD<sup>+</sup>を再生し，発生した乳酸を肝臓に運んで再び<a href="#glucose">グルコース</a>へと再生させることで，
-	筋肉の代謝負担を一部肝臓に肩代わりさせることがある．
+	ピルビン酸キナーゼ<sub>(ADP→ATP)</sub>によって<a href="#phosphoenolpyruic-acid">ホスホエノールピルビン酸</a>から得られる．この反応は不可逆であり，糖新生の際はピルビン酸カルボキシラーゼ<sub>(ATP→ADP，ビオチン依存)</sub>によって<a href="#oxaloacetic-acid">オキサロ酢酸</a>へと変換される．
+</p><p class="desc">
+	乳酸発酵では，乳酸デヒドロゲナーゼによって ʟ-<a href="#lactic-acid">乳酸</a>となる<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>．
+	エタノール発酵では，ピルビン酸デカルボキシラーゼによって<a href="#acetaldehyde">アセトアルデヒド</a>と CO<sub>2</sub> に分解される<sub>(TPP依存，不可逆)</sub>．
+</p></div></div><div class="item"><div class="head"><p class="name" id="lactic-acid">乳酸</p><p class="group">発酵</p></div><div class="descs"><p class="desc">
+	炭素数 3 ．ピルビン酸のケトン基が還元されてヒドロキシ基になったもの．
+</p><p class="desc">
+	酸素が不足しているとき，細胞質の酵素乳酸デヒドロゲナーゼによって<a href="#pyruvic-acid">ピルビン酸</a>から得られる<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>．
+	激しい運動時に筋肉中でNAD<sup>+</sup>が不足した際は，乳酸発酵によってNAD<sup>+</sup>を再生する．
+	発生した乳酸は肝臓に運ばれ，再び<a href="#glucose">グルコース</a>へと再生される．
 	こうして形成される，筋肉でグルコースを乳酸にし，肝臓で乳酸をグルコースにするというサイクルを，コリ回路という．
-</p></div></div><div class="item"><div class="head"><p class="name" id="acetaldehyde">アセトアルデヒド</p><p class="group">解糖系</p></div><div class="descs"><p class="desc">
+</p></div></div><div class="item"><div class="head"><p class="name" id="acetaldehyde">アセトアルデヒド</p><p class="group">発酵</p></div><div class="descs"><p class="desc">
+	酢酸の還元により得られる炭素数 2 のアルデヒド（アセトは酢酸を意味する）．
+</p><p class="desc">
 	エタノール発酵を行う微生物において，
 	ピルビン酸デカルボキシラーゼによって<a href="#pyruvic-acid">ピルビン酸</a>から得られ<sub>(TPP依存，Mg<sup>2+</sup>依存，CO<sub>2</sub>放出)</sub>，
 	アルコールデヒドロゲナーゼによってエタノールへと還元され<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>，放出される．
+</p></div></div><div class="item"><div class="head"><p class="name" id="6-phosphogluconic-acid">6-ホスホグルコン酸</p><p class="group">ペントースリン酸経路</p></div><div class="descs"><p class="desc">
+	グルコースの 1 位炭素を酸化して得られるカルボン酸に，リン酸基が結合したもの．
+</p><p class="desc">
+	グルコース 6-リン酸デヒドロゲナーゼ<sub>(Mg<sup>2+</sup>依存)</sub>による<a href="#glucose-6-phosphate">グルコース 6-リン酸</a>の酸化から生じる．
+</p><p class="desc">
+	6-ホスホグルコン酸デヒドロゲナーゼによって<a href="#ribulose-5-phosphate">リブロース 5-リン酸</a>となる<sub>(NADP<sup>+</sup>+H<sup>+</sup>→NADPH ， CO<sub>2</sub> 放出)</sub>．
+</p></div></div><div class="item"><div class="head"><p class="name" id="ribulose-5-phosphate">リブロース 5-リン酸</p><p class="group">ペントースリン酸経路</p></div><div class="descs"><p class="desc">
+	ケトペントース（炭素数 5 のケトース）．
+</p><p class="desc">
+	6-ホスホグルコン酸デヒドロゲナーゼによる <a href="#6-phosphogluconic-acid">6-ホスホグルコン酸</a>の酸化<sub>(CO<sub>2</sub> 放出)</sub>で得られる．
+</p><p class="desc">
+	ホスホペントースイソメラーゼによって異性体の<span class="no_link">リボース 5-リン酸</span>となる．
+	一方，リブロース 5-リン酸エピメラーゼによってエピマーの<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="xylulose-5-phosphate">キシルロース 5-リン酸</p><p class="group">ペントースリン酸経路</p></div><div class="descs"><p class="desc">
+	ケトペントース（炭素数 5 のケトース）．
+</p><p class="desc">
+	リブロース 5-リン酸エピメラーゼによってエピマーの<a href="#ribulose-5-phosphate">リブロース 5-リン酸</a>から得られる．
+</p><p class="desc">
+	トランスケトラーゼ<sub>(TPP 依存)</sub>によって，
+	<span class="no_link">リボース 5-リン酸</span>あるいは<a href="#erythrose-4-phosphate">エリトロース 4-リン酸</a>へと 2 炭素を転移し，
+	自身は 3 炭糖の<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>となる．
+	2 炭素を転移されたリボース 5-リン酸とエリトロース 4-リン酸は，
+	それぞれ<a href="#sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</a>と<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>になる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</p><p class="group">ペントースリン酸経路</p></div><div class="descs"><p class="desc">
+	ケトヘプトース（炭素数 7 のケトース）．
+</p><p class="desc">
+	トランスケトラーゼ<sub>(TPP 依存)</sub>によって<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>由来の 2 炭素が<span class="no_link">リボース 5-リン酸</span>へと転移したもの．
+</p><p class="desc">
+	トランスアルドラーゼによって<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>へと 3 炭素を転移し，
+	自身は 4 炭糖の<a href="#erythrose-4-phosphate">エリトロース 4-リン酸</a>となる．
+	3 炭素を転移されたグリセルアルデヒド 3-リン酸は，<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="erythrose-4-phosphate">エリトロース 4-リン酸</p><p class="group">ペントースリン酸経路</p></div><div class="descs"><p class="desc">
+	アルドテトロース（炭素数 4 のアルドース）．
+</p><p class="desc">
+	トランスアルドラーゼによって<a href="#sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</a>が 3 炭素を失ったもの．
+</p><p class="desc">
+	トランスケトラーゼ<sub>(TPP 依存)</sub>によって<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>から 2 炭素を得て，<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="oxaloacetic-acid">オキサロ酢酸</p><p class="group">糖新生・クエン酸回路</p></div><div class="descs"><p class="desc">
+	炭素数 4 で，シュウ酸（オキサロはシュウ酸を意味する）と酢酸がくっついたような構造をしている．
+</p><p class="desc">
+	ミトコンドリア膜を通過できないため，ミトコンドリアマトリックスとサイトゾル間の輸送に<span class="no_link">リンゴ酸</span><span class="no_link">アスパラギン酸</span>シャトルを必要とする．
+</p><p class="desc">
+	ピルビン酸カルボキシラーゼ<sub>(ATP⇄ADP，ビオチン依存)</sub>によって<a href="#pyruvic-acid">ピルビン酸</a>から得られる．
+	これはクエン酸回路に対するアナプレロティック（補充）経路としてはたらく．
+</p><p class="desc">
+	ホスホエノールピルビン酸カルボキシキナーゼ<sub>(GTP⇄GDP)</sub>によって<a href="#phosphoenolpyruic-acid">ホスホエノールピルビン酸</a>と CO<sub>2</sub> になる．
+	ホスホエノールピルビン酸カルボキシキナーゼのアイソザイムには，
+	ミトコンドリアマトリックスに存在するものとサイトゾルに存在するものがある．
+	糖新生の中で<a href="#glyceraldehyde-3-phosphate">グリセルアルデヒド 3-リン酸</a>デヒドロゲナーゼが必要とする NADH をリンゴ酸アスパラギン酸シャトルによって供給する場合，サイトゾルのアイソザイムがはたらく．
+	一方，<a href="#lactic-acid">乳酸</a>を用いた糖新生では，
+	細胞質における乳酸からピルビン酸への酸化によって NADH が得られるため，
+	ミトコンドリアのアイソザイムがはたらく．
 </p></div></div></body>

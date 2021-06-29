@@ -146,6 +146,10 @@ citric-acid [クエン酸]
 - 先頭に番号の付いていないファイルは無視されます．
 - 同じ番号のついたファイルが複数存在すると，エラーになります．
 
+# 例
+実際の記述の仕方の例は，
+[ここ](https://github.com/fiveseven-lambda/biochemistry/tree/master/source)から見ることができます．
+
 # 手元の環境構築
 Rust を用いているため，
 編集した結果を手元で確認するには Rust の環境が必要になります．

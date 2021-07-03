@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>化合物から見る代謝経路</title><link rel="stylesheet" type="text/css" href="style.css"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：2021/06/29</p></header><p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>化合物から見る代謝経路</title><link rel="stylesheet" type="text/css" href="style.css"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：2021/07/03</p></header><p>
 	生化学の教科書には様々な代謝経路の流れが順序立って書かれている．
 	一方この記事は，森の代わりに木を見るかのように，
 	個々の化合物が代謝の中でどういう役割を担っているか記述する．
@@ -188,6 +188,11 @@
 </p><p class="desc">
 	乳酸発酵では，乳酸デヒドロゲナーゼによって ʟ-<a href="#lactic-acid">乳酸</a>となる<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>．
 	エタノール発酵では，ピルビン酸デカルボキシラーゼによって<a href="#acetaldehyde">アセトアルデヒド</a>と CO<sub>2</sub> に分解される<sub>(TPP依存，不可逆)</sub>．
+</p><p class="desc">
+	ピルビン酸デヒドロゲナーゼ複合体<sub>(真核細胞ではミトコンドリア，細菌ではサイトゾルに局在)</sub>による
+	酸化的脱炭酸<sub>(不可逆，NAD<sup>+</sup> → NADH， CoA-SH 消費， CO<sub>2</sub> 放出， TPP/FAD/リポ酸依存)</sub>を受けて<a href="#acetyl-CoA">アセチル CoA</a>となる．
+	チアミンが欠乏するとピルビン酸がアセチル CoA に変換できず，糖質代謝に支障が出て主に神経系に異常をきたす．
+	また代わりに乳酸発酵が進み，乳酸アシドーシスを起こすこともある．
 </p></div></div><div class="item"><div class="head"><p class="name" id="lactic-acid">乳酸</p><p class="group">発酵</p></div><div class="descs"><p class="desc">
 	炭素数 3 ．ピルビン酸のケトン基が還元されてヒドロキシ基になったもの．
 </p><p class="desc">
@@ -238,14 +243,31 @@
 	トランスアルドラーゼによって<a href="#sedoheptulose-7-phosphate">セドヘプツロース 7-リン酸</a>が 3 炭素を失ったもの．
 </p><p class="desc">
 	トランスケトラーゼ<sub>(TPP 依存)</sub>によって<a href="#xylulose-5-phosphate">キシルロース 5-リン酸</a>から 2 炭素を得て，<a href="#fructose-6-phosphate">フルクトース 6-リン酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="acetyl-CoA">アセチル CoA</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+	クエン酸回路に炭素源として投入される主要な物質．
+</p><p class="desc">
+	ピルビン酸デヒドロゲナーゼ<sub>(TPP 依存，ピルビン酸 → CO<sub>2</sub>)</sub>，
+	ジヒドロリポイルトランスアセチラーゼ<sub>(リポ酸依存， CoA-SH → アセチル CoA)</sub>，
+	ジヒドロリポイルデヒドロゲナーゼ<sub>(FAD依存， NAD<sup>+</sup> → NADH + H<sup>+</sup>)</sub>
+	の 3 つでできたピルビン酸デヒドロゲナーゼ複合体によって，
+	<a href="#pyruvic-acid">ピルビン酸</a>から生成される．
+	この反応は，
+	α-ケトグルタル酸デヒドロゲナーゼによる
+	<span class="no_link">α-ケトグルタル酸</span>から<span class="no_link">スクシニル CoA</span>への変換，
+	そして分枝鎖 α-ケト酸デヒドロゲナーゼによる
+	分枝鎖 α-ケト酸からｓのアシル CoA 誘導体への変換
+	と類似する．
+</p><p class="desc">
+	アセチル基に含まれるメチル基 -CH<sub>3</sub> はそのままだと酸化しにくいが，
+	クエン酸回路に入る際クエン酸シンターゼ<sub>(H<sub>2</sub>O → CoA-SH)</sub>によって<a href="#oxaloacetic-acid">オキサロ酢酸</a>と縮合して<a href="#citric-acid">クエン酸</a>となることで，
+	-CH<sub>3</sub> からメチレン基 -CH<sub>2</sub>- になって反応性が高まる．
 </p></div></div><div class="item"><div class="head"><p class="name" id="oxaloacetic-acid">オキサロ酢酸</p><p class="group">糖新生・クエン酸回路</p></div><div class="descs"><p class="desc">
 	炭素数 4 で，シュウ酸（オキサロはシュウ酸を意味する）と酢酸がくっついたような構造をしている．
-	細胞内の濃度は低い．
 </p><p class="desc">
 	ミトコンドリア膜を通過できないため，ミトコンドリアマトリックスとサイトゾル間の輸送に<span class="no_link">リンゴ酸</span><span class="no_link">アスパラギン酸</span>シャトルを必要とする．
 </p><p class="desc">
 	ピルビン酸カルボキシラーゼ<sub>(ATP⇄ADP，ビオチン依存)</sub>によって<a href="#pyruvic-acid">ピルビン酸</a>から得られる．
-	これはクエン酸回路に対するアナプレロティック（補充）経路としてはたらく．
+	これは，細胞内濃度の低いオキサロ酢酸に対するアナプレロティック（補充）経路としてはたらく．
 </p><p class="desc">
 	ホスホエノールピルビン酸カルボキシキナーゼ<sub>(GTP⇄GDP)</sub>によって<a href="#phosphoenolpyruic-acid">ホスホエノールピルビン酸</a>と CO<sub>2</sub> になる．
 	ホスホエノールピルビン酸カルボキシキナーゼのアイソザイムには，
@@ -254,4 +276,24 @@
 	一方，<a href="#lactic-acid">乳酸</a>を用いた糖新生では，
 	細胞質における乳酸からピルビン酸への酸化によって NADH が得られるため，
 	ミトコンドリアのアイソザイムがはたらく．
+</p><p class="desc">
+	クエン酸シンターゼによって<a href="#acetyl-CoA">アセチル CoA</a> と縮合し，シトロイル CoA を経て<a href="#citric-acid">クエン酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="citric-acid">クエン酸</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+	クエン酸シンターゼによって<a href="#oxaloacetic-acid">オキサロ酢酸</a>と<a href="#acetyl-CoA">アセチル CoA</a> が縮合してできる．
+</p><p class="desc">
+	アコニターゼ<sub>(可逆)</sub>によって，シス-アコニット酸を経て<a href="#isocitric-acid">イソクエン酸</a>となる．
+	アコニターゼは鉄-硫黄中心をもつが，鉄の欠乏によってこれを失うと構造が変化し，
+	mRNA に結合してタンパク質合成を調節する IRP となる．
+	IRP によって調節されるのは，
+	トランスフェリン受容体やフェリチンといった鉄の代謝に関わるタンパク質である．
+</p></div></div><div class="item"><div class="head"><p class="name" id="isocitric-acid">イソクエン酸</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+	<a href="#citric-acid">クエン酸</a>の異性体．	
+	アコニターゼによってクエン酸から変換される．
+</p><p class="desc">
+	イソクエン酸デヒドロゲナーゼによる酸化的脱炭酸を受けて
+	<span class="no_link">α-ケトグルタル酸</span>となる．
+	酸化に NAD<sup>+</sup> を用いるイソクエン酸デヒドロゲナーゼは，
+	ミトコンドリアマトリックスに存在してクエン酸回路に関わる．
+	一方，酸化に NADP<sup>+</sup> を用いるイソクエン酸デヒドロゲナーゼは，
+	ミトコンドリアマトリックスとサイトゾル両方に存在し， NADPH の生成に関わる．
 </p></div></div></body>

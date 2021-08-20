@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>化合物から見る代謝経路</title><link rel="stylesheet" type="text/css" href="style.css"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：2021/07/03</p></header><p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>化合物から見る代謝経路</title><link rel="stylesheet" type="text/css" href="style.css"></head><body><header><h1>化合物から見る代謝経路</h1><p>最終更新日：2021/08/20</p></header><p>
 	生化学の教科書には様々な代謝経路の流れが順序立って書かれている．
 	一方この記事は，森の代わりに木を見るかのように，
 	個々の化合物が代謝の中でどういう役割を担っているか記述する．
@@ -189,6 +189,8 @@
 	乳酸発酵では，乳酸デヒドロゲナーゼによって ʟ-<a href="#lactic-acid">乳酸</a>となる<sub>(NADH+H<sup>+</sup>⇄NAD<sup>+</sup>)</sub>．
 	エタノール発酵では，ピルビン酸デカルボキシラーゼによって<a href="#acetaldehyde">アセトアルデヒド</a>と CO<sub>2</sub> に分解される<sub>(TPP依存，不可逆)</sub>．
 </p><p class="desc">
+	リンゴ酸酵素<sub>(NAD<sup>+</sup>/NADP<sup>+</sup>，可逆)</sub>による<a href="#malic-acid">リンゴ酸</a>の酸化的脱炭酸によって得られる．
+</p><p class="desc">
 	ピルビン酸デヒドロゲナーゼ複合体<sub>(真核細胞ではミトコンドリア，細菌ではサイトゾルに局在)</sub>による
 	酸化的脱炭酸<sub>(不可逆，NAD<sup>+</sup> → NADH， CoA-SH 消費， CO<sub>2</sub> 放出， TPP/FAD/リポ酸依存)</sub>を受けて<a href="#acetyl-CoA">アセチル CoA</a>となる．
 	チアミンが欠乏するとピルビン酸がアセチル CoA に変換できず，糖質代謝に支障が出て主に神経系に異常をきたす．
@@ -253,7 +255,7 @@
 	<a href="#pyruvic-acid">ピルビン酸</a>から生成される．
 	この反応は，
 	α-ケトグルタル酸デヒドロゲナーゼによる
-	<span class="no_link">α-ケトグルタル酸</span>から<span class="no_link">スクシニル CoA</span>への変換，
+	<a href="#alpha-ketoglutaric-acid">α-ケトグルタル酸</a>から<a href="#succinyl-CoA">スクシニル CoA</a>への変換，
 	そして分枝鎖 α-ケト酸デヒドロゲナーゼによる
 	分枝鎖 α-ケト酸からそのアシル CoA 誘導体への変換
 	と類似する．
@@ -264,7 +266,7 @@
 </p></div></div><div class="item"><div class="head"><p class="name" id="oxaloacetic-acid">オキサロ酢酸</p><p class="group">糖新生・クエン酸回路</p></div><div class="descs"><p class="desc">
 	炭素数 4 で，シュウ酸（オキサロはシュウ酸を意味する）と酢酸がくっついたような構造をしている．
 </p><p class="desc">
-	ミトコンドリア膜を通過できないため，ミトコンドリアマトリックスとサイトゾル間の輸送に<span class="no_link">リンゴ酸</span><span class="no_link">アスパラギン酸</span>シャトルを必要とする．
+	ミトコンドリア膜を通過できないため，ミトコンドリアマトリックスとサイトゾル間の輸送に<a href="#malic-acid">リンゴ酸</a><span class="no_link">アスパラギン酸</span>シャトルを必要とする．
 </p><p class="desc">
 	ピルビン酸カルボキシラーゼ<sub>(ATP⇄ADP，ビオチン依存)</sub>によって<a href="#pyruvic-acid">ピルビン酸</a>から得られる．
 	これは，細胞内濃度の低いオキサロ酢酸に対するアナプレロティック（補充）経路としてはたらく．
@@ -277,6 +279,7 @@
 	細胞質における乳酸からピルビン酸への酸化によって NADH が得られるため，
 	ミトコンドリアのアイソザイムがはたらく．
 </p><p class="desc">
+	リンゴ酸デヒドロゲナーゼ<sub>(NAD<sup>+</sup>⇄NADH+H<sup>+</sup>)</sub>による<a href="#malic-acid">リンゴ酸</a>の酸化で得られる．
 	クエン酸シンターゼによって<a href="#acetyl-CoA">アセチル CoA</a> と縮合し，シトロイル CoA を経て<a href="#citric-acid">クエン酸</a>となる．
 </p></div></div><div class="item"><div class="head"><p class="name" id="citric-acid">クエン酸</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
 	クエン酸シンターゼによって<a href="#oxaloacetic-acid">オキサロ酢酸</a>と<a href="#acetyl-CoA">アセチル CoA</a> が縮合してできる．
@@ -286,14 +289,44 @@
 	mRNA に結合してタンパク質合成を調節する IRP となる．
 	IRP によって調節されるのは，
 	トランスフェリン受容体やフェリチンといった鉄の代謝に関わるタンパク質である．
-</p></div></div><div class="item"><div class="head"><p class="name" id="isocitric-acid">イソクエン酸</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+</p></div></div><div class="item"><div class="head"><p class="name" id="isocitric-acid">イソクエン酸</p><p class="group">クエン酸回路・グリオキシル酸回路</p></div><div class="descs"><p class="desc">
 	<a href="#citric-acid">クエン酸</a>の異性体．	
 	アコニターゼによってクエン酸から変換される．
 </p><p class="desc">
 	イソクエン酸デヒドロゲナーゼによる酸化的脱炭酸を受けて
-	<span class="no_link">α-ケトグルタル酸</span>となる．
+	<a href="#alpha-ketoglutaric-acid">α-ケトグルタル酸</a>となる．
 	酸化に NAD<sup>+</sup> を用いるイソクエン酸デヒドロゲナーゼは，
 	ミトコンドリアマトリックスに存在してクエン酸回路に関わる．
 	一方，酸化に NADP<sup>+</sup> を用いるイソクエン酸デヒドロゲナーゼは，
 	ミトコンドリアマトリックスとサイトゾル両方に存在し， NADPH の生成に関わる．
+</p><p class="desc">
+	イソクエン酸リアーゼによって<a href="#glyoxylic-acid">グリオキシル酸</a>と<a href="#succinic-acid">コハク酸</a>に開裂する．
+</p></div></div><div class="item"><div class="head"><p class="name" id="alpha-ketoglutaric-acid">α-ケトグルタル酸</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+	2-オキソグルタル酸とも．
+</p><p class="desc">
+	イソクエン酸デヒドロゲナーゼ<sub>(NAD<sup>+</sup>/NADP<sup>+</sup>，CO<sub>2</sub> 放出)</sub>によって<a href="#isocitric-acid">イソクエン酸</a>から得られる．
+	α-ケトグルタル酸デヒドロゲナーゼ複合体（ピルビン酸デヒドロゲナーゼ複合体に近縁）によって<a href="#succinyl-CoA">スクシニル CoA</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="succinyl-CoA">スクシニル CoA</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+	「スクシニル」はコハク酸のこと．
+</p><p class="desc">
+	α-ケトグルタル酸デヒドロゲナーゼ複合体によって<a href="#alpha-ketoglutaric-acid">α-ケトグルタル酸</a>から得られる．
+	スクシニル CoA シンテターゼ<sub>(GDP+P<sub>i</sub>⇄GTP+CoA-SH)</sub>によって<a href="#succinic-acid">コハク酸</a>へと変換される．
+</p></div></div><div class="item"><div class="head"><p class="name" id="succinic-acid">コハク酸</p><p class="group">クエン酸回路・グリオキシル酸回路</p></div><div class="descs"><p class="desc">
+	スクシニル CoA シンテターゼによって補酵素 A と結合し<a href="#succinyl-CoA">スクシニル CoA</a>となる．
+	コハク酸デヒドロゲナーゼ<sub>(FAD⇄FADH<sub>2</sub>)</sub>によって酸化されて<a href="#fumaric-acid">フマル酸</a>となる．
+</p><p class="desc">
+	イソクエン酸リアーゼによって<a href="#isocitric-acid">イソクエン酸</a>から得られる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="fumaric-acid">フマル酸</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+	コハク酸デヒドロゲナーゼによって<a href="#succinic-acid">コハク酸</a>から得られる．
+	フマラーゼによる加水を受けて<a href="#malic-acid">リンゴ酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="malic-acid">リンゴ酸</p><p class="group">クエン酸回路</p></div><div class="descs"><p class="desc">
+	生体内では ʟ-型である．
+</p><p class="desc">
+	フマラーゼ<sub>(H<sub>2</sub>O消費)</sub>によって<a href="#fumaric-acid">フマル酸</a>から得られる．
+	リンゴ酸デヒドロゲナーゼ<sub>(NAD<sup>+</sup>⇄NADH+H<sup>+</sup>)</sub>によって<a href="#oxaloacetic-acid">オキサロ酢酸</a>となる．
+</p><p class="desc">
+	リンゴ酸酵素による酸化的脱炭酸を受けて<a href="#pyruvic-acid">ピルビン酸</a>となる．
+</p></div></div><div class="item"><div class="head"><p class="name" id="glyoxylic-acid">グリオキシル酸</p><p class="group">グリオキシル酸回路</p></div><div class="descs"><p class="desc">
+	イソクエン酸リアーゼによって<a href="#isocitric-acid">イソクエン酸</a>から得られる．
+	リンゴ酸シンターゼによって<a href="#acetyl-CoA">アセチル CoA</a>と縮合して<a href="#malic-acid">リンゴ酸</a>になる．
 </p></div></div></body>
